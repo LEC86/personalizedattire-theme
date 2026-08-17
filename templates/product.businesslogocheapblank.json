@@ -18,10 +18,10 @@
             "custom_liquid": "{% render 'hide-installments-message' %}"
           }
         },
-        "pricing_showcase_block": {
+        "business_offer_intro_block": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% render 'pricing-showcase', heading: 'Unbeatable Prices (starting at)', intro_text: 'Let Us Create A Store Page For You|Upload Your Designs And Checkout For No Charge|No Fees Or Gimmicks. Receive Your Store Link In 24 Hours|$8.99 Flat Rate Shipping On Your Entire Order' %}"
+            "custom_liquid": "<div style='margin: 18px 0 8px; text-align: left;'><h2 style='margin: 0 0 10px; font-size: 28px; line-height: 1.15; font-weight: 800;'>CUSTOM BUSINESS SHIRTS FROM $7.99</h2><p style='margin: 0 0 8px; font-size: 16px; line-height: 1.5; font-weight: 600;'>Professional full-color printing on quality Gildan shirts.</p><p style='margin: 0; font-size: 15px; line-height: 1.5; font-weight: 700;'>No Minimum • No Setup Fees • $8.99 Flat-Rate Shipping</p></div>"
           }
         },
         "business_start_gate_block": {
@@ -80,7 +80,7 @@
       },
       "block_order": [
         "hide_installments_block",
-        "pricing_showcase_block",
+        "business_offer_intro_block",
         "business_start_gate_block",
         "shirt_design_1_block",
         "shirt_design_2_block",
