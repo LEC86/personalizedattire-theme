@@ -1,7 +1,7 @@
 {%- comment -%}
-  Keeps the business shirt order fields hidden until the customer clicks
-  a "Start My Shirts" button. Also binds to any existing button/link on
-  the page whose visible text is "Start My Shirts".
+  Keeps the business shirt order fields and Add to Cart area hidden until
+  the customer clicks a "Start My Shirts" button. Also binds to any existing
+  button/link on the page whose visible text is "Start My Shirts".
 {%- endcomment -%}
 
 <div class="business-start-gate" data-business-start-gate>
@@ -38,7 +38,9 @@
 
   html:not(.business-shirt-form-started) .design-upload-block,
   html:not(.business-shirt-form-started) [data-block="org-contact"],
-  html:not(.business-shirt-form-started) [data-block="notes-questions"] {
+  html:not(.business-shirt-form-started) [data-block="notes-questions"],
+  html:not(.business-shirt-form-started) .product-form__buttons,
+  html:not(.business-shirt-form-started) product-form {
     display: none !important;
   }
 
