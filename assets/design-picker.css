@@ -1,0 +1,50 @@
+.product__media-wrapper {
+  align-self: start;
+}
+
+.design-picker {
+  margin-top: 1.2rem;
+}
+
+.design-picker__label {
+  margin: 0 0 0.6rem;
+  font-weight: 600;
+}
+
+.design-picker__thumbs {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.design-picker__thumb {
+  position: relative;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  padding: 2px;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.design-picker__thumb img {
+  display: block;
+  border-radius: 4px;
+}
+
+.design-picker__thumb.is-selected {
+  border-color: rgb(var(--color-foreground));
+}
+
+.design-picker__premium-badge {
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  background: rgb(var(--color-foreground));
+  color: rgb(var(--color-background));
+  font-size: 1rem;
+  line-height: 1;
+  padding: 3px 5px;
+  border-radius: 4px;
+  font-weight: 600;
+}

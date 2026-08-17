@@ -1,0 +1,19 @@
+{%- comment -%}
+  Hides all extra product images, the thumbnail strip, and the prev/next
+  slider arrows, leaving only the single main image visible. Scoped to
+  this section's own gallery id so it never affects other product
+  templates that reuse the same main-product section.
+  Usage: {% render 'fundraiser-single-image-only' %}
+{%- endcomment -%}
+
+<style>
+  #MediaGallery-{{ section.id }} .product__media-item:not(:first-child) {
+    display: none !important;
+  }
+  #MediaGallery-{{ section.id }} .thumbnail-slider {
+    display: none !important;
+  }
+  #MediaGallery-{{ section.id }} .slider-buttons {
+    display: none !important;
+  }
+</style>

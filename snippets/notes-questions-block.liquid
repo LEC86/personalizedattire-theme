@@ -1,0 +1,64 @@
+{%- comment -%}
+  Optional free-text notes/questions field.
+  Usage: {% render 'notes-questions-block' %}
+{%- endcomment -%}
+{%- assign shirt_product_form_id = 'product-form-' | append: section.id -%}
+
+<div class="campaign-block" data-block="notes-questions">
+  <div class="campaign-field">
+    <label for="notes-questions-{{ section.id }}">Notes or questions for us (optional)</label>
+    <textarea
+      id="notes-questions-{{ section.id }}"
+      name="properties[Notes / Questions]"
+      class="campaign-textarea"
+      rows="3"
+      form="{{ shirt_product_form_id }}"
+    ></textarea>
+  </div>
+</div>
+
+<style>
+  .campaign-block {
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .campaign-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .campaign-field label {
+    color: inherit !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+  }
+  .campaign-textarea {
+    border: 1px solid #b5b5b5;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-family: inherit;
+    max-width: 420px;
+    width: 100%;
+    box-sizing: border-box;
+    color: #1a1a1a !important;
+    background: #fff !important;
+    resize: vertical;
+  }
+</style>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-block="notes-questions"]').forEach(function (block) {
+      if (block.dataset.dsInit) return;
+      block.dataset.dsInit = "true";
+      var input = block.querySelector('.campaign-textarea');
+      var formId = input ? input.getAttribute('form') : null;
+      var form = formId ? document.getElementById(formId) : block.closest('form');
+      if (form) form.setAttribute('enctype', 'multipart/form-data');
+    });
+  })();
+</script>

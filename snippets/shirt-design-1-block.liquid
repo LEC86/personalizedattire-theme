@@ -1,0 +1,343 @@
+{%- comment -%}
+  Shirt Design 1 upload block.
+  Usage: {% render 'shirt-design-1-block', product_form_id: product_form_id %}
+{%- endcomment -%}
+
+<div class="design-upload-block" data-block="shirt-design-1" data-form-id="{{ product_form_id }}">
+  <h3 class="design-upload-title">Shirt Design 1</h3>
+
+  <div class="design-upload-row">
+    <div class="design-upload-field">
+      <label>
+        <span>Front Design</span>
+        <input
+          type="file"
+          name="properties[Design 1 - Front Design]"
+          class="design-file-input"
+          accept="image/*,.pdf,.ai,.eps"
+          form="{{ product_form_id }}"
+        />
+      </label>
+      <div class="design-file-preview" hidden>
+        <img class="design-file-preview-img" alt="" hidden />
+        <span class="design-file-preview-name"></span>
+      </div>
+    </div>
+
+    <div class="design-upload-field">
+      <label>
+        <span>Back Design</span>
+        <input
+          type="file"
+          name="properties[Design 1 - Back Design]"
+          class="design-file-input"
+          accept="image/*,.pdf,.ai,.eps"
+          form="{{ product_form_id }}"
+        />
+      </label>
+      <div class="design-file-preview" hidden>
+        <img class="design-file-preview-img" alt="" hidden />
+        <span class="design-file-preview-name"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="design-extra-fields" hidden>
+    <label class="design-instructions-field">
+      <span>Design 1 Instructions</span>
+      <textarea
+        name="properties[Design 1 Instructions]"
+        rows="3"
+        placeholder="Placement, size, notes for the printer..."
+        form="{{ product_form_id }}"
+      ></textarea>
+    </label>
+
+    <div class="design-color-multiselect">
+      <span class="design-color-label">Shirt Colors customer can choose for this design</span>
+
+      <button type="button" class="color-select-toggle">
+        Select colors <span class="color-select-count"></span>
+        <svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </button>
+
+      <div class="color-select-panel" hidden></div>
+
+      <input type="hidden" name="properties[Design 1 Shirt Colors]" class="color-select-value" form="{{ product_form_id }}" />
+    </div>
+  </div>
+</div>
+
+<style>
+  .design-upload-block {
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .design-upload-title {
+    margin: 0 0 12px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .design-upload-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .design-upload-field {
+    flex: 1 1 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .design-upload-field label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .design-upload-field input[type="file"] {
+    font-size: 13px;
+  }
+  .design-file-preview {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .design-file-preview-img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #d9d9d9;
+    flex: 0 0 auto;
+  }
+  .design-file-preview-name {
+    font-size: 12px !important;
+    color: #555 !important;
+    word-break: break-all;
+  }
+  .design-extra-fields {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed #d9d9d9;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .design-instructions-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .design-instructions-field textarea {
+    font-family: inherit;
+    font-size: 13px;
+    padding: 8px;
+    resize: vertical;
+  }
+  .design-color-multiselect {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .design-color-label {
+    font-weight: 500;
+  }
+  .color-select-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    max-width: 320px;
+    padding: 8px 12px;
+    border: 1px solid #b5b5b5;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .color-select-count {
+    color: #666;
+    font-weight: 400;
+  }
+  .color-select-panel {
+    max-width: 320px;
+    max-height: 220px;
+    overflow-y: auto;
+    border: 1px solid #b5b5b5;
+    border-radius: 6px;
+    padding: 8px;
+    background: #fff;
+  }
+  .design-color-multiselect label {
+    all: revert;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 4px 2px !important;
+    font-size: 13px !important;
+    cursor: pointer;
+  }
+  .design-color-multiselect label.all-colors-option {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 4px;
+    padding-bottom: 8px !important;
+    font-weight: 600 !important;
+  }
+  .design-color-option-text {
+    font-size: 13px !important;
+    line-height: normal !important;
+    color: #1a1a1a !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-block !important;
+  }
+  .design-color-multiselect input[type="checkbox"] {
+    all: revert;
+    width: 15px !important;
+    height: 15px !important;
+    margin: 0 !important;
+    flex: 0 0 auto;
+  }
+</style>
+
+<script>
+(function () {
+  var COLOR_OPTIONS = [
+    "White", "Black", "Sport Grey", "Charcoal", "Dark Heather",
+    "Light Pink", "Navy", "Royal Blue", "Irish Green", "Military Green",
+    "Red", "Yellow", "Purple", "Orange", "Heliconia"
+  ];
+
+  var scripts = document.querySelectorAll('[data-block="shirt-design-1"]');
+  var root = scripts[scripts.length - 1];
+  if (!root || root.dataset.dsInit) return;
+  root.dataset.dsInit = "true";
+
+  var formId = root.getAttribute('data-form-id');
+  var form = formId ? document.getElementById(formId) : root.closest('form');
+  if (form) {
+    form.setAttribute('enctype', 'multipart/form-data');
+  }
+
+  var fileInputs = root.querySelectorAll('.design-file-input');
+  var extraFields = root.querySelector('.design-extra-fields');
+
+  function anyFileSelected() {
+    return Array.prototype.some.call(fileInputs, function (input) {
+      return input.files && input.files.length > 0;
+    });
+  }
+
+  function updateVisibility() {
+    extraFields.hidden = !anyFileSelected();
+  }
+
+  function updatePreview(input) {
+    var field = input.closest('.design-upload-field');
+    var preview = field.querySelector('.design-file-preview');
+    var img = field.querySelector('.design-file-preview-img');
+    var nameLabel = field.querySelector('.design-file-preview-name');
+    var file = input.files && input.files[0];
+
+    if (!file) {
+      preview.hidden = true;
+      img.hidden = true;
+      img.removeAttribute('src');
+      nameLabel.textContent = '';
+      return;
+    }
+
+    preview.hidden = false;
+
+    if (file.type && file.type.indexOf('image/') === 0) {
+      var url = URL.createObjectURL(file);
+      img.src = url;
+      img.hidden = false;
+      nameLabel.textContent = file.name;
+    } else {
+      img.hidden = true;
+      img.removeAttribute('src');
+      nameLabel.textContent = file.name;
+    }
+  }
+
+  fileInputs.forEach(function (input) {
+    input.addEventListener('change', function () {
+      updateVisibility();
+      updatePreview(input);
+    });
+  });
+
+  var panel = root.querySelector('.color-select-panel');
+  var toggleBtn = root.querySelector('.color-select-toggle');
+  var countLabel = root.querySelector('.color-select-count');
+  var hiddenValue = root.querySelector('.color-select-value');
+
+  function buildOptionLabel(value, text, extraClass) {
+    var label = document.createElement('label');
+    if (extraClass) label.className = extraClass;
+
+    var checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.value = value;
+
+    var textSpan = document.createElement('span');
+    textSpan.className = 'design-color-option-text';
+    textSpan.textContent = text;
+
+    label.appendChild(checkbox);
+    label.appendChild(textSpan);
+    return { label: label, checkbox: checkbox };
+  }
+
+  var allEntry = buildOptionLabel('All Colors', 'All Colors', 'all-colors-option');
+  panel.appendChild(allEntry.label);
+  var allCheckbox = allEntry.checkbox;
+
+  var colorCheckboxes = COLOR_OPTIONS.map(function (color) {
+    var entry = buildOptionLabel(color, color, null);
+    panel.appendChild(entry.label);
+    return entry.checkbox;
+  });
+
+  function syncFromIndividual() {
+    var allChecked = colorCheckboxes.every(function (cb) { return cb.checked; });
+    allCheckbox.checked = allChecked;
+    updateHiddenValue();
+  }
+
+  function syncFromAll() {
+    colorCheckboxes.forEach(function (cb) { cb.checked = allCheckbox.checked; });
+    updateHiddenValue();
+  }
+
+  function updateHiddenValue() {
+    var selected = [];
+    if (allCheckbox.checked) selected.push('All Colors');
+    colorCheckboxes.forEach(function (cb) {
+      if (cb.checked) selected.push(cb.value);
+    });
+    hiddenValue.value = selected.join(', ');
+    countLabel.textContent = selected.length ? '(' + selected.length + ' selected)' : '';
+  }
+
+  allCheckbox.addEventListener('change', syncFromAll);
+  colorCheckboxes.forEach(function (cb) {
+    cb.addEventListener('change', syncFromIndividual);
+  });
+
+  toggleBtn.addEventListener('click', function () {
+    panel.hidden = !panel.hidden;
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!root.contains(e.target)) panel.hidden = true;
+  });
+})();
+</script>

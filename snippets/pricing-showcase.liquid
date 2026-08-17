@@ -1,0 +1,121 @@
+{%- comment -%}
+  Stylish pricing showcase. Pulls each garment's price directly from the
+  same cost-share metafields used elsewhere, so updating one metafield
+  updates the display everywhere.
+  Usage: {% render 'pricing-showcase' %}
+  Optional: heading (default "Great Prices").
+  Optional: intro_text -- a single string with lines separated by "|",
+  rendered above the heading inside the same box. The first line is
+  styled slightly larger/bolder as a headline.
+{%- endcomment -%}
+
+{%- assign tshirt_price = product.metafields.custom.tshirt_cost_share.value | default: 12.99 -%}
+{%- assign long_sleeve_price = product.metafields.custom.long_sleeve_cost_share.value | default: 18.99 -%}
+{%- assign sweatshirt_price = product.metafields.custom.sweatshirt_cost_share.value | default: 21.99 -%}
+{%- assign hoodie_price = product.metafields.custom.hoodie_cost_share.value | default: 28.99 -%}
+{%- assign resolved_heading = heading | default: 'Great Prices' -%}
+
+<div class="pricing-showcase">
+  {%- if intro_text -%}
+    {%- assign intro_lines = intro_text | split: '|' -%}
+    <div class="pricing-showcase-intro">
+      {%- for line in intro_lines -%}
+        <p class="pricing-showcase-intro-line{% if forloop.first %} pricing-showcase-intro-headline{% endif %}">{{ line }}</p>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  <h3 class="pricing-showcase-title">{{ resolved_heading }}</h3>
+  <div class="pricing-showcase-grid">
+    <div class="pricing-showcase-item">
+      <span class="pricing-showcase-label">T-Shirt</span>
+      <span class="pricing-showcase-price">${{ tshirt_price }}</span>
+    </div>
+    <div class="pricing-showcase-item">
+      <span class="pricing-showcase-label">Long Sleeve T-Shirt</span>
+      <span class="pricing-showcase-price">${{ long_sleeve_price }}</span>
+    </div>
+    <div class="pricing-showcase-item">
+      <span class="pricing-showcase-label">Sweatshirt</span>
+      <span class="pricing-showcase-price">${{ sweatshirt_price }}</span>
+    </div>
+    <div class="pricing-showcase-item">
+      <span class="pricing-showcase-label">Hoodie</span>
+      <span class="pricing-showcase-price">${{ hoodie_price }}</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .pricing-showcase {
+    background: linear-gradient(135deg, #2684ff 0%, #1c6fe0 100%);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 16px 0;
+    box-shadow: 0 3px 10px rgba(38, 132, 255, 0.25);
+  }
+  .pricing-showcase-intro {
+    margin: 0 0 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    text-align: center;
+  }
+  .pricing-showcase-intro-line {
+    margin: 0 0 6px;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+    line-height: 1.4;
+  }
+  .pricing-showcase-intro-line:last-child {
+    margin-bottom: 0;
+  }
+  .pricing-showcase-intro-headline {
+    font-size: 17px !important;
+    font-weight: 800 !important;
+    margin-bottom: 10px !important;
+  }
+  .pricing-showcase-title {
+    margin: 0 0 14px;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-align: center;
+  }
+  .pricing-showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .pricing-showcase-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 8px;
+    padding: 12px 8px;
+    text-align: center;
+  }
+  .pricing-showcase-label {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    color: #fff !important;
+    opacity: 0.9;
+  }
+  .pricing-showcase-price {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+  }
+
+  @media screen and (min-width: 480px) {
+    .pricing-showcase-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

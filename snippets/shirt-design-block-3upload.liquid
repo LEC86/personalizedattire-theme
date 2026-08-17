@@ -1,0 +1,319 @@
+{%- comment -%}
+  Shirt design upload block with THREE upload fields: Front Pocket
+  Design, Front Full Design, and Back Design. Front Pocket and Front
+  Full are mutually exclusive -- uploading one while the other already
+  has a file blocks the upload and shows an alert asking to remove the
+  other one first. Same chained reveal behavior as the standard block
+  (Design 2 stays hidden until Design 1 gets any file, etc).
+  Usage: {% render 'shirt-design-block-3upload', design_number: 1 %}
+  No color picker on this variant (removed on request).
+{%- endcomment -%}
+{%- assign shirt_product_form_id = 'product-form-' | append: section.id -%}
+{%- assign design_title = 'Shirt Design ' | append: design_number -%}
+
+<div
+  id="shirt-design-block-{{ design_number }}"
+  class="design-upload-block"
+  data-block="shirt-design"
+  data-design-number="{{ design_number }}"
+  data-form-id="{{ shirt_product_form_id }}"
+  {% if design_number > 1 %}hidden{% endif %}
+>
+  <h3 class="design-upload-title">{{ design_title }}</h3>
+
+  <div class="design-upload-row">
+    <div class="design-upload-field" data-design-role="front-pocket">
+      <label>
+        <span>Front Pocket Design ($7.99)</span>
+        <input
+          type="file"
+          name="properties[Design {{ design_number }} - Front Pocket Design]"
+          class="design-file-input"
+          data-design-role-input="front-pocket"
+          accept="image/*,.pdf,.ai,.eps"
+          form="{{ shirt_product_form_id }}"
+        />
+      </label>
+      <div class="design-file-preview" hidden>
+        <img class="design-file-preview-img" alt="" hidden />
+        <span class="design-file-preview-name"></span>
+        <button type="button" class="design-file-remove">&times; Remove</button>
+      </div>
+    </div>
+
+    <div class="design-upload-field" data-design-role="front-full">
+      <label>
+        <span>Front Full Design (+$3)</span>
+        <input
+          type="file"
+          name="properties[Design {{ design_number }} - Front Full Design]"
+          class="design-file-input"
+          data-design-role-input="front-full"
+          accept="image/*,.pdf,.ai,.eps"
+          form="{{ shirt_product_form_id }}"
+        />
+      </label>
+      <div class="design-file-preview" hidden>
+        <img class="design-file-preview-img" alt="" hidden />
+        <span class="design-file-preview-name"></span>
+        <button type="button" class="design-file-remove">&times; Remove</button>
+      </div>
+    </div>
+
+    <div class="design-upload-field">
+      <label>
+        <span>Back Design (+$3)</span>
+        <input
+          type="file"
+          name="properties[Design {{ design_number }} - Back Design]"
+          class="design-file-input"
+          accept="image/*,.pdf,.ai,.eps"
+          form="{{ shirt_product_form_id }}"
+        />
+      </label>
+      <div class="design-file-preview" hidden>
+        <img class="design-file-preview-img" alt="" hidden />
+        <span class="design-file-preview-name"></span>
+        <button type="button" class="design-file-remove">&times; Remove</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="design-extra-fields" hidden>
+    <label class="design-instructions-field">
+      <span>{{ design_title }} Instructions (optional)</span>
+      <textarea
+        name="properties[Design {{ design_number }} Instructions]"
+        rows="3"
+        placeholder="notes for the printer"
+        form="{{ shirt_product_form_id }}"
+      ></textarea>
+    </label>
+  </div>
+</div>
+
+<style>
+  .design-upload-block {
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .design-upload-title {
+    margin: 0 0 12px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .design-upload-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .design-upload-field {
+    flex: 1 1 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .design-upload-field label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .design-upload-field input[type="file"] {
+    font-size: 13px;
+  }
+  .design-file-preview {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+  }
+  .design-file-preview-img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #d9d9d9;
+    flex: 0 0 auto;
+  }
+  .design-file-preview-name {
+    font-size: 12px !important;
+    color: #555 !important;
+    word-break: break-all;
+  }
+  .design-file-remove {
+    all: revert;
+    background: none !important;
+    border: none !important;
+    color: #c0392b !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    padding: 2px 4px !important;
+    margin-left: auto;
+  }
+  .design-file-remove:hover {
+    text-decoration: underline;
+  }
+  .design-extra-fields {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed #d9d9d9;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .design-instructions-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .design-instructions-field textarea {
+    font-family: inherit;
+    font-size: 13px;
+    padding: 8px;
+    resize: vertical;
+  }
+</style>
+
+<script>
+(function () {
+  var num = {{ design_number }};
+  var root = document.getElementById('shirt-design-block-' + num);
+  if (!root || root.dataset.dsInit) return;
+  root.dataset.dsInit = "true";
+
+  var formId = root.getAttribute('data-form-id');
+  var form = formId ? document.getElementById(formId) : root.closest('form');
+  if (form) {
+    form.setAttribute('enctype', 'multipart/form-data');
+  }
+
+  var fileInputs = root.querySelectorAll('.design-file-input');
+  var extraFields = root.querySelector('.design-extra-fields');
+  var frontPocketInput = root.querySelector('[data-design-role-input="front-pocket"]');
+  var frontFullInput = root.querySelector('[data-design-role-input="front-full"]');
+
+  function anyFileSelected(inputs) {
+    return Array.prototype.some.call(inputs, function (input) {
+      return input.files && input.files.length > 0;
+    });
+  }
+
+  function updateOwnExtraVisibility() {
+    extraFields.hidden = !anyFileSelected(fileInputs);
+  }
+
+  function updatePreview(input) {
+    var field = input.closest('.design-upload-field');
+    var preview = field.querySelector('.design-file-preview');
+    var img = field.querySelector('.design-file-preview-img');
+    var nameLabel = field.querySelector('.design-file-preview-name');
+    var file = input.files && input.files[0];
+
+    if (!file) {
+      preview.hidden = true;
+      img.hidden = true;
+      img.removeAttribute('src');
+      nameLabel.textContent = '';
+      return;
+    }
+
+    preview.hidden = false;
+
+    if (file.type && file.type.indexOf('image/') === 0) {
+      var url = URL.createObjectURL(file);
+      img.src = url;
+      img.hidden = false;
+      nameLabel.textContent = file.name;
+    } else {
+      img.hidden = true;
+      img.removeAttribute('src');
+      nameLabel.textContent = file.name;
+    }
+  }
+
+  function clearSingleUpload(input) {
+    input.value = '';
+    updatePreview(input);
+    updateOwnExtraVisibility();
+    notifyNextBlock();
+  }
+
+  // Front Pocket and Front Full are mutually exclusive. If the other
+  // one already has a file, block this selection and alert the user.
+  function guardFrontConflict(changedInput, otherInput, changedLabel, otherLabel) {
+    if (!changedInput || !otherInput) return false;
+    if (changedInput.files && changedInput.files.length > 0 &&
+        otherInput.files && otherInput.files.length > 0) {
+      changedInput.value = '';
+      updatePreview(changedInput);
+      alert('You can only upload one of "Front Pocket Design" or "Front Full Design". Please remove the ' + otherLabel + ' before uploading the ' + changedLabel + '.');
+      return true;
+    }
+    return false;
+  }
+
+  function setBlockVisibility(el, visible) {
+    if (!el) return;
+    el.hidden = !visible;
+    if (!visible) {
+      var inputs = el.querySelectorAll('.design-file-input');
+      inputs.forEach(function (i) { i.value = ''; });
+
+      var extra = el.querySelector('.design-extra-fields');
+      if (extra) extra.hidden = true;
+
+      var textarea = el.querySelector('.design-extra-fields textarea');
+      if (textarea) textarea.value = '';
+
+      el.querySelectorAll('.design-file-preview').forEach(function (p) { p.hidden = true; });
+      el.querySelectorAll('.design-file-preview-img').forEach(function (i) {
+        i.hidden = true;
+        i.removeAttribute('src');
+      });
+      el.querySelectorAll('.design-file-preview-name').forEach(function (n) { n.textContent = ''; });
+
+      var nextNum = parseInt(el.dataset.designNumber, 10) + 1;
+      var nextEl = document.getElementById('shirt-design-block-' + nextNum);
+      setBlockVisibility(nextEl, false);
+    }
+  }
+
+  function notifyNextBlock() {
+    var nextEl = document.getElementById('shirt-design-block-' + (num + 1));
+    if (nextEl) {
+      setBlockVisibility(nextEl, anyFileSelected(fileInputs));
+    }
+  }
+
+  fileInputs.forEach(function (input) {
+    input.addEventListener('change', function () {
+      if (input === frontPocketInput) {
+        if (guardFrontConflict(frontPocketInput, frontFullInput, 'Front Pocket Design', 'Front Full Design')) {
+          return;
+        }
+      } else if (input === frontFullInput) {
+        if (guardFrontConflict(frontFullInput, frontPocketInput, 'Front Full Design', 'Front Pocket Design')) {
+          return;
+        }
+      }
+
+      updateOwnExtraVisibility();
+      updatePreview(input);
+      notifyNextBlock();
+    });
+
+    var field = input.closest('.design-upload-field');
+    var removeBtn = field.querySelector('.design-file-remove');
+    if (removeBtn) {
+      removeBtn.addEventListener('click', function () {
+        clearSingleUpload(input);
+      });
+    }
+  });
+})();
+</script>

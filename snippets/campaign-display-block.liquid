@@ -1,0 +1,121 @@
+{%- comment -%}
+  Campaign Display block: campaign name, description, and fundraiser end
+  date.
+  Usage: {% render 'campaign-display-block' %}
+{%- endcomment -%}
+{%- assign shirt_product_form_id = 'product-form-' | append: section.id -%}
+
+<div class="campaign-block" data-block="campaign-display">
+  <h3 class="campaign-block-title">Campaign Display</h3>
+
+  <div class="campaign-field">
+    <label for="campaign-name-{{ section.id }}">
+      Campaign Name <span class="campaign-note">(what buyers see)</span>
+    </label>
+    <input
+      type="text"
+      id="campaign-name-{{ section.id }}"
+      name="properties[Campaign Name]"
+      class="campaign-text-input"
+      placeholder="e.g. Westfield Marching Band Uniform Fund"
+      form="{{ shirt_product_form_id }}"
+    />
+  </div>
+
+  <div class="campaign-field">
+    <label for="campaign-description-{{ section.id }}">
+      Short Description Optional <span class="campaign-note">(what buyers see)</span>
+    </label>
+    <textarea
+      id="campaign-description-{{ section.id }}"
+      name="properties[Campaign Description]"
+      class="campaign-textarea"
+      rows="2"
+      placeholder='e.g. "Raising money for new band uniforms"'
+      form="{{ shirt_product_form_id }}"
+    ></textarea>
+  </div>
+
+  <div class="campaign-field">
+    <label for="campaign-end-date-{{ section.id }}">Fundraiser End Date</label>
+    <input
+      type="date"
+      id="campaign-end-date-{{ section.id }}"
+      name="properties[Campaign End Date]"
+      class="campaign-date-input"
+      form="{{ shirt_product_form_id }}"
+    />
+    <p class="campaign-helper-text">
+      Orders ship every 7 days during the campaign, with the final shipment going out 7 days after the campaign end date.
+    </p>
+  </div>
+</div>
+
+<style>
+  .campaign-block {
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .campaign-block-title {
+    margin: 0 0 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: inherit !important;
+  }
+  .campaign-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .campaign-field:last-child {
+    margin-bottom: 0;
+  }
+  .campaign-field label {
+    color: inherit !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+  }
+  .campaign-note {
+    font-weight: 400 !important;
+    color: #666 !important;
+  }
+  .campaign-text-input,
+  .campaign-textarea,
+  .campaign-date-input {
+    border: 1px solid #b5b5b5;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-family: inherit;
+    max-width: 420px;
+    width: 100%;
+    box-sizing: border-box;
+    color: #1a1a1a !important;
+    background: #fff !important;
+  }
+  .campaign-textarea {
+    resize: vertical;
+  }
+  .campaign-helper-text {
+    margin: 2px 0 0;
+    font-size: 12px !important;
+    color: #666 !important;
+  }
+</style>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-block="campaign-display"]').forEach(function (block) {
+      if (block.dataset.dsInit) return;
+      block.dataset.dsInit = "true";
+      var input = block.querySelector('.campaign-text-input');
+      var formId = input ? input.getAttribute('form') : null;
+      var form = formId ? document.getElementById(formId) : block.closest('form');
+      if (form) form.setAttribute('enctype', 'multipart/form-data');
+    });
+  })();
+</script>

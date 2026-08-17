@@ -1,0 +1,177 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "product-rating": {
+          "type": "rating",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "start_fundraiser_button_block": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'start-fundraiser-button' %}"
+          }
+        },
+        "fundraiser_single_image_block": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'fundraiser-single-image-only' %}"
+          }
+        },
+        "fundraiser_countdown_block": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'fundraiser-countdown' %}"
+          }
+        },
+        "design_picker_block": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'design-picker', product: product, product_form_id: product_form_id %}"
+          }
+        },
+        "fundraiser_metafield_context_block": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'fundraiser-metafield-context' %}"
+          }
+        },
+        "fundraiser_share_block": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'fundraiser-share-button' %}"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        },
+        "qstomizer_product_customizer_qstomizer_product_block_KKynYC": {
+          "type": "shopify://apps/qstomizer-product-customizer/blocks/qstomizer-product-block/91ddef34-1f34-4141-843a-d613c0433aef",
+          "settings": {
+            "textonbtn": "Customize",
+            "btnclass": "btn",
+            "apply_custom_styles": false,
+            "button_border_radius": 0,
+            "button_bg_color": "#ff8a00",
+            "text_color": "#000000",
+            "button_text_size": 12,
+            "text_alignment": "center",
+            "button_width": "full",
+            "button_padding_top": 10,
+            "button_padding_bottom": 10,
+            "button_margin_top": 10,
+            "button_margin_bottom": 10,
+            "btnclassremove": "",
+            "textoheader": "Your custom product:",
+            "elmstohide": ""
+          }
+        },
+        "mobile_photos_below_title": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<style>@media screen and (max-width: 749px) { .product__info-wrapper, .product__info-container { display: contents; } .product__media-wrapper { order: 1; margin: 2rem 0; } .product__info-container > .product__title, .product__info-container > .product__text { order: 0; } .product__info-container > *:not(.product__title):not(.product__text) { order: 2; } }</style>"
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "product-rating",
+        "price",
+        "start_fundraiser_button_block",
+        "fundraiser_single_image_block",
+        "fundraiser_countdown_block",
+        "design_picker_block",
+        "variant_picker",
+        "fundraiser_metafield_context_block",
+        "fundraiser_share_block",
+        "quantity_selector",
+        "buy_buttons",
+        "description",
+        "share",
+        "qstomizer_product_customizer_qstomizer_product_block_KKynYC",
+        "mobile_photos_below_title"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail_slider",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
+    },
+    "disclosures": {
+      "type": "disclosures",
+      "settings": {
+        "heading": "Disclosures",
+        "heading_size": "h2",
+        "open_by_default": false,
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "disclosures"
+  ]
+}

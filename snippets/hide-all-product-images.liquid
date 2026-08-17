@@ -1,0 +1,15 @@
+{%- comment -%}
+  Hides the entire product image/media area (not just limits to one
+  image) so the page shows no product photos at all. Scoped to this
+  section's own media wrapper id, so it only affects whichever template
+  includes this block.
+  Usage: {% render 'hide-all-product-images' %}
+{%- endcomment -%}
+<style>
+  #MediaGallery-{{ section.id }} {
+    display: none !important;
+  }
+  .product__media-wrapper {
+    display: none !important;
+  }
+</style>

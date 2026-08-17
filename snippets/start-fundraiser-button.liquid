@@ -1,0 +1,35 @@
+{%- comment -%}
+  "Start Your Fundraiser Now" call-to-action button, links to the
+  "Create Your Fundraiser" product (the org intake form).
+  Usage: {% render 'start-fundraiser-button' %}
+{%- endcomment -%}
+
+<div class="start-fundraiser-cta">
+  <a href="/products/custom-apparel-made-easy-copy" class="start-fundraiser-button">
+    Start Your Fundraiser Now
+  </a>
+</div>
+
+<style>
+  .start-fundraiser-cta {
+    margin: 14px 0;
+  }
+  .start-fundraiser-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #2684ff !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    padding: 12px 22px;
+    border-radius: 999px;
+    box-shadow: 0 2px 6px rgba(38, 132, 255, 0.35);
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+  .start-fundraiser-button:hover {
+    background: #1c6fe0 !important;
+    transform: translateY(-1px);
+  }
+</style>

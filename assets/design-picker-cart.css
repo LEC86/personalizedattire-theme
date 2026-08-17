@@ -1,0 +1,18 @@
+.cart-item__image-container {
+  position: relative;
+}
+
+.cart-item__design-overlay {
+  position: absolute;
+  /* Increase "top" to push down further, decrease to move up */
+  top: 5%;
+  /* Make more negative to move further left, less negative (toward 0) to move right */
+  left: -1.5%;
+  width: 103%;
+  height: 95%;
+  /* fill (not contain) so width/height stretch independently instead of
+     preserving the image's original aspect ratio */
+  object-fit: fill;
+  object-position: center top;
+  pointer-events: none;
+}

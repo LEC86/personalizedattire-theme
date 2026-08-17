@@ -1,0 +1,48 @@
+{%- comment -%}
+  Renders design thumbnail picker + overlay hidden input.
+  Usage: {% render 'design-picker', product: product %}
+{%- endcomment -%}
+{%- assign designs = product.metafields.custom.designs.value -%}
+{%- if designs != blank -%}
+  {{ 'design-picker.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'design-picker.js' | asset_url }}" defer="defer"></script>
+  <div class="design-picker" data-design-picker>
+    <p class="design-picker__label">Choose a design:</p>
+    <div class="design-picker__thumbs">
+      {%- for design in designs -%}
+        <button
+          type="button"
+          class="design-picker__thumb"
+          data-design-thumb
+          data-design-name="{{ design.name.value | escape }}"
+          data-overlay-src="{{ design.overlay_image.value | image_url: width: 1200 }}"
+          data-premium="{{ design.premium.value }}"
+          aria-label="Select {{ design.name.value | escape }} design"
+        >
+          <img
+            src="{{ design.thumbnail.value | image_url: width: 120 }}"
+            alt="{{ design.name.value | escape }}"
+            loading="lazy"
+            width="60"
+            height="60"
+          >
+          {%- if design.premium.value -%}
+            <span class="design-picker__premium-badge">+$3</span>
+          {%- endif -%}
+        </button>
+      {%- endfor -%}
+    </div>
+  </div>
+  <input
+    type="hidden"
+    name="properties[Design]"
+    value=""
+    data-design-property-input
+  >
+  <input
+    type="hidden"
+    name="properties[_Design Image]"
+    value=""
+    data-design-image-property-input
+  >
+{%- endif -%}

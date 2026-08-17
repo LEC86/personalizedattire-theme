@@ -1,0 +1,33 @@
+{%- comment -%}
+  Carries this product's fundraiser metafields (cost shares) through to
+  the order as hidden properties, so real buyer orders retain that
+  context even though this template has no visible intake fields.
+
+  Property names are prefixed with an underscore, which is Shopify's
+  built-in convention for hiding a line item property from the customer
+  in cart, checkout, and order confirmation emails -- it still shows
+  normally on the Order page in the admin.
+
+  Shirt Design 1-4 Title metafields were removed (no longer needed), so
+  those are no longer looked up here.
+
+  Only metafields that are actually set on this product get submitted;
+  Shopify omits blank properties automatically.
+  Usage: {% render 'fundraiser-metafield-context' %}
+{%- endcomment -%}
+{%- assign shirt_product_form_id = 'product-form-' | append: section.id -%}
+
+<div data-block="fundraiser-metafield-context" style="display:none;">
+  {%- if product.metafields.custom.tshirt_cost_share.value != blank -%}
+    <input type="hidden" name="properties[_T-Shirt Cost Share]" value="{{ product.metafields.custom.tshirt_cost_share.value }}" form="{{ shirt_product_form_id }}" />
+  {%- endif -%}
+  {%- if product.metafields.custom.sweatshirt_cost_share.value != blank -%}
+    <input type="hidden" name="properties[_Sweatshirt Cost Share]" value="{{ product.metafields.custom.sweatshirt_cost_share.value }}" form="{{ shirt_product_form_id }}" />
+  {%- endif -%}
+  {%- if product.metafields.custom.hoodie_cost_share.value != blank -%}
+    <input type="hidden" name="properties[_Hoodie Cost Share]" value="{{ product.metafields.custom.hoodie_cost_share.value }}" form="{{ shirt_product_form_id }}" />
+  {%- endif -%}
+  {%- if product.metafields.custom.long_sleeve_cost_share.value != blank -%}
+    <input type="hidden" name="properties[_Long Sleeve T-Shirt Cost Share]" value="{{ product.metafields.custom.long_sleeve_cost_share.value }}" form="{{ shirt_product_form_id }}" />
+  {%- endif -%}
+</div>

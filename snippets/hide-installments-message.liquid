@@ -1,0 +1,11 @@
+{%- comment -%}
+  Hides the "Pay over time...Learn more" Shop Pay Installments message
+  that the theme's price block renders automatically. This only affects
+  whichever template includes this block, since it's a plain CSS rule.
+  Usage: {% render 'hide-installments-message' %}
+{%- endcomment -%}
+<style>
+  .installment {
+    display: none !important;
+  }
+</style>

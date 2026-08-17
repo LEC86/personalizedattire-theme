@@ -1,0 +1,36 @@
+{%- comment -%}
+  "View A Sample Store Page" button, links to the George Washington High
+  School Marching Band Fundraiser product (a live example of a finished
+  buyer-facing overlay page).
+  Usage: {% render 'view-sample-store-button' %}
+{%- endcomment -%}
+
+<div class="view-sample-cta">
+  <a href="/products/create-your-fundraiser-copy" class="view-sample-button">
+    View A Sample Store Page
+  </a>
+</div>
+
+<style>
+  .view-sample-cta {
+    margin: 14px 0;
+  }
+  .view-sample-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #2684ff !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    padding: 12px 22px;
+    border-radius: 999px;
+    box-shadow: 0 2px 6px rgba(38, 132, 255, 0.35);
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+  .view-sample-button:hover {
+    background: #1c6fe0 !important;
+    transform: translateY(-1px);
+  }
+</style>

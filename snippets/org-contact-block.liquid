@@ -1,0 +1,140 @@
+{%- comment -%}
+  Org Identity & Contact block.
+  Usage: {% render 'org-contact-block' %}
+  Optional: heading (default "Org Identity & Contact"),
+  show_mailing_address: false to hide Mailing Address,
+  show_organization_name: false to hide Organization Name,
+  phone_note / email_note: text shown in parentheses next to those labels.
+{%- endcomment -%}
+{%- assign shirt_product_form_id = 'product-form-' | append: section.id -%}
+{%- assign resolved_heading = heading | default: 'Org Identity & Contact' -%}
+
+<div class="campaign-block" data-block="org-contact">
+  <h3 class="campaign-block-title">{{ resolved_heading }}</h3>
+
+  {%- unless show_organization_name == false -%}
+  <div class="campaign-field">
+    <label for="org-legal-name-{{ section.id }}">Organization Name</label>
+    <input
+      type="text"
+      id="org-legal-name-{{ section.id }}"
+      name="properties[Organization Name]"
+      class="campaign-text-input"
+      form="{{ shirt_product_form_id }}"
+    />
+  </div>
+  {%- endunless -%}
+
+  <div class="campaign-field">
+    <label for="org-contact-name-{{ section.id }}">Contact Person Name</label>
+    <input
+      type="text"
+      id="org-contact-name-{{ section.id }}"
+      name="properties[Contact Person Name]"
+      class="campaign-text-input"
+      form="{{ shirt_product_form_id }}"
+    />
+  </div>
+
+  <div class="campaign-field">
+    <label for="org-email-{{ section.id }}">
+      Email{% if email_note %} <span class="campaign-note">({{ email_note }})</span>{% endif %}
+    </label>
+    <input
+      type="email"
+      id="org-email-{{ section.id }}"
+      name="properties[Contact Email]"
+      class="campaign-text-input"
+      form="{{ shirt_product_form_id }}"
+    />
+  </div>
+
+  <div class="campaign-field">
+    <label for="org-phone-{{ section.id }}">
+      Phone Number{% if phone_note %} <span class="campaign-note">({{ phone_note }})</span>{% endif %}
+    </label>
+    <input
+      type="tel"
+      id="org-phone-{{ section.id }}"
+      name="properties[Contact Phone Number]"
+      class="campaign-text-input"
+      form="{{ shirt_product_form_id }}"
+    />
+  </div>
+
+  {%- unless show_mailing_address == false -%}
+  <div class="campaign-field">
+    <label for="org-address-{{ section.id }}">Mailing Address</label>
+    <textarea
+      id="org-address-{{ section.id }}"
+      name="properties[Mailing Address]"
+      class="campaign-textarea"
+      rows="2"
+      form="{{ shirt_product_form_id }}"
+    ></textarea>
+  </div>
+  {%- endunless -%}
+</div>
+
+<style>
+  .campaign-block {
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .campaign-block-title {
+    margin: 0 0 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: inherit !important;
+  }
+  .campaign-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .campaign-field:last-child {
+    margin-bottom: 0;
+  }
+  .campaign-field label {
+    color: inherit !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+  }
+  .campaign-note {
+    font-weight: 400 !important;
+    color: #666 !important;
+  }
+  .campaign-text-input,
+  .campaign-textarea {
+    border: 1px solid #b5b5b5;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-family: inherit;
+    max-width: 420px;
+    width: 100%;
+    box-sizing: border-box;
+    color: #1a1a1a !important;
+    background: #fff !important;
+  }
+  .campaign-textarea {
+    resize: vertical;
+  }
+</style>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-block="org-contact"]').forEach(function (block) {
+      if (block.dataset.dsInit) return;
+      block.dataset.dsInit = "true";
+      var input = block.querySelector('.campaign-text-input');
+      var formId = input ? input.getAttribute('form') : null;
+      var form = formId ? document.getElementById(formId) : block.closest('form');
+      if (form) form.setAttribute('enctype', 'multipart/form-data');
+    });
+  })();
+</script>

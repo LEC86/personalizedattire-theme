@@ -1,0 +1,264 @@
+{%- comment -%}
+  Payout block: payment method selection (Venmo / PayPal / CashApp / Check,
+  required, pick exactly one) with account details per method, a required
+  W9 acknowledgment checkbox, and a free-text notes/questions field.
+  Usage: {% render 'payout-block' %}
+
+  To temporarily hide the PayPal option without deleting anything, flip
+  show_paypal_option below to false. Set it back to true to restore it.
+{%- endcomment -%}
+{%- assign shirt_product_form_id = 'product-form-' | append: section.id -%}
+{%- assign show_paypal_option = true -%}
+
+<div class="campaign-block" data-block="payout">
+  <h3 class="campaign-block-title">Payout</h3>
+
+  <div class="payout-trust-badge">
+    <span class="svg-wrapper" aria-hidden="true">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
+        <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </span>
+    <span>Your information is submitted securely</span>
+  </div>
+
+  <div class="payout-method-field">
+    <span class="campaign-field-label">Payment Method <span class="campaign-note">(choose one)</span></span>
+    <p class="campaign-helper-text payout-timing-note">
+      Payment is sent every 14 days for Venmo, PayPal, and CashApp, and once the campaign is over for Check by mail.
+    </p>
+
+    <div class="payout-option">
+      <label class="payout-option-label">
+        <input type="radio" name="properties[Payout Method]" value="Venmo" class="payout-radio" required form="{{ shirt_product_form_id }}" />
+        <span class="payout-option-text">Venmo</span>
+      </label>
+      <input
+        type="text"
+        name="properties[Venmo Username]"
+        class="campaign-text-input payout-detail-input"
+        placeholder="Venmo username"
+        form="{{ shirt_product_form_id }}"
+      />
+    </div>
+
+    {%- if show_paypal_option -%}
+    <div class="payout-option">
+      <label class="payout-option-label">
+        <input type="radio" name="properties[Payout Method]" value="PayPal" class="payout-radio" required form="{{ shirt_product_form_id }}" />
+        <span class="payout-option-text">PayPal</span>
+      </label>
+      <input
+        type="text"
+        name="properties[PayPal Email]"
+        class="campaign-text-input payout-detail-input"
+        placeholder="PayPal email"
+        form="{{ shirt_product_form_id }}"
+      />
+    </div>
+    {%- endif -%}
+
+    <div class="payout-option">
+      <label class="payout-option-label">
+        <input type="radio" name="properties[Payout Method]" value="CashApp" class="payout-radio" required form="{{ shirt_product_form_id }}" />
+        <span class="payout-option-text">CashApp</span>
+      </label>
+      <input
+        type="text"
+        name="properties[CashApp $Cashtag]"
+        class="campaign-text-input payout-detail-input"
+        placeholder="$Cashtag"
+        form="{{ shirt_product_form_id }}"
+      />
+    </div>
+
+    <div class="payout-option">
+      <label class="payout-option-label">
+        <input type="radio" name="properties[Payout Method]" value="Check" class="payout-radio" required form="{{ shirt_product_form_id }}" />
+        <span class="payout-option-text">Check</span>
+      </label>
+      <span class="payout-note">(will be mailed to the address provided above)</span>
+    </div>
+  </div>
+
+  <div class="w9-field">
+    <label class="w9-label">
+      <input type="checkbox" name="properties[W9 Agreement]" value="Agreed" class="payout-checkbox" required form="{{ shirt_product_form_id }}" />
+      <span class="payout-option-text">
+        You will be required to fill out a W9 form when the campaign nears a total payout of $600. Check this box to agree to that.
+      </span>
+    </label>
+    <p class="campaign-helper-text">
+      (We partner with a third-party company to handle your sensitive data for this form.)
+    </p>
+  </div>
+
+  <div class="campaign-field payout-notes-field">
+    <label for="payout-notes-{{ section.id }}">Notes we should know or questions you want to ask</label>
+    <textarea
+      id="payout-notes-{{ section.id }}"
+      name="properties[Notes / Questions]"
+      class="campaign-textarea"
+      rows="3"
+      form="{{ shirt_product_form_id }}"
+    ></textarea>
+  </div>
+</div>
+
+<style>
+  .campaign-block {
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .campaign-block-title {
+    margin: 0 0 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: inherit !important;
+  }
+  .payout-trust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #eef7ee;
+    color: #1a7a1a !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    padding: 6px 10px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+  }
+  .payout-trust-badge svg {
+    flex: 0 0 auto;
+  }
+  .campaign-field-label {
+    display: block;
+    font-weight: 500 !important;
+    margin-bottom: 10px;
+    color: inherit !important;
+    font-size: 13px !important;
+  }
+  .campaign-note {
+    font-weight: 400 !important;
+    color: #666 !important;
+  }
+  .payout-method-field {
+    margin-bottom: 16px;
+  }
+  .payout-timing-note {
+    margin: 0 0 12px !important;
+  }
+  .payout-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .payout-option:last-child {
+    margin-bottom: 0;
+  }
+  .payout-option-label {
+    all: revert;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    cursor: pointer;
+    flex: 0 0 auto;
+    min-width: 90px;
+    color: inherit !important;
+  }
+  .payout-radio,
+  .payout-checkbox {
+    all: revert;
+    width: 15px !important;
+    height: 15px !important;
+    margin: 0 !important;
+    flex: 0 0 auto;
+  }
+  .payout-option-text {
+    font-size: 13px !important;
+    color: inherit !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-block !important;
+  }
+  .payout-detail-input {
+    max-width: 240px !important;
+  }
+  .payout-note {
+    font-size: 12px !important;
+    color: #666 !important;
+  }
+  .campaign-text-input {
+    border: 1px solid #b5b5b5;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-family: inherit;
+    width: 100%;
+    box-sizing: border-box;
+    color: #1a1a1a !important;
+    background: #fff !important;
+  }
+  .campaign-textarea {
+    border: 1px solid #b5b5b5;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-family: inherit;
+    width: 100%;
+    max-width: 420px;
+    box-sizing: border-box;
+    color: #1a1a1a !important;
+    background: #fff !important;
+    resize: vertical;
+  }
+  .w9-field {
+    border-top: 1px dashed #d9d9d9;
+    padding-top: 16px;
+    margin-bottom: 16px;
+  }
+  .w9-label {
+    all: revert;
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    cursor: pointer;
+    color: inherit !important;
+  }
+  .campaign-helper-text {
+    margin: 8px 0 0 23px;
+    font-size: 12px !important;
+    color: #666 !important;
+  }
+  .payout-notes-field {
+    border-top: 1px dashed #d9d9d9;
+    padding-top: 16px;
+    margin-bottom: 0 !important;
+  }
+  .payout-notes-field label {
+    color: inherit !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    display: block;
+    margin-bottom: 6px;
+  }
+</style>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-block="payout"]').forEach(function (block) {
+      if (block.dataset.dsInit) return;
+      block.dataset.dsInit = "true";
+      var input = block.querySelector('.payout-radio, .payout-checkbox');
+      var formId = input ? input.getAttribute('form') : null;
+      var form = formId ? document.getElementById(formId) : block.closest('form');
+      if (form) form.setAttribute('enctype', 'multipart/form-data');
+    });
+  })();
+</script>

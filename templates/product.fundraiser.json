@@ -1,0 +1,141 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "product-rating": {
+          "type": "rating",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "qstomizer_product_customizer_qstomizer_product_block_KKynYC": {
+          "type": "shopify://apps/qstomizer-product-customizer/blocks/qstomizer-product-block/91ddef34-1f34-4141-843a-d613c0433aef",
+          "settings": {
+            "textonbtn": "Build Your Design",
+            "btnclass": "btn",
+            "apply_custom_styles": true,
+            "button_border_radius": 23,
+            "button_bg_color": "#E1F434",
+            "text_color": "#000000",
+            "button_text_size": 28,
+            "text_alignment": "center",
+            "button_width": "full",
+            "button_padding_top": 10,
+            "button_padding_bottom": 10,
+            "button_margin_top": 10,
+            "button_margin_bottom": 10,
+            "btnclassremove": "",
+            "textoheader": "Your custom product:",
+            "elmstohide": ""
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        },
+        "mobile_photos_below_title": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<style>@media screen and (max-width: 749px) { .product__info-wrapper, .product__info-container { display: contents; } .product__media-wrapper { order: 1; margin: 2rem 0; } .product__info-container > .product__title, .product__info-container > .product__text { order: 0; } .product__info-container > *:not(.product__title):not(.product__text) { order: 2; } }</style>"
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "product-rating",
+        "price",
+        "qstomizer_product_customizer_qstomizer_product_block_KKynYC",
+        "buy_buttons",
+        "description",
+        "share",
+        "mobile_photos_below_title"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
+    },
+    "disclosures": {
+      "type": "disclosures",
+      "settings": {
+        "heading": "Disclosures",
+        "heading_size": "h2",
+        "open_by_default": false,
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "YOU MAY ALSO LIKE",
+        "heading_size": "h1",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 0,
+        "padding_bottom": 40
+      }
+    }
+  },
+  "order": [
+    "main",
+    "disclosures",
+    "related-products"
+  ]
+}

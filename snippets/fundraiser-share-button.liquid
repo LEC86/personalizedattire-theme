@@ -1,0 +1,88 @@
+{%- comment -%}
+  "Share this fundraiser" button for the buyer-facing overlay page.
+  Uses the native Web Share API on mobile/supported browsers, and falls
+  back to a "copy link" button everywhere else.
+  Usage: {% render 'fundraiser-share-button' %}
+{%- endcomment -%}
+
+<div class="fundraiser-share" data-block="fundraiser-share" data-share-url="{{ shop.url }}{{ product.url }}" data-share-title="{{ product.title | escape }}">
+  <button type="button" class="fundraiser-share-button">
+    <span class="svg-wrapper" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="2"/>
+        <circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+        <circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="2"/>
+        <path d="M8.5 10.5L15.5 6.5M8.5 13.5L15.5 17.5" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </span>
+    <span class="fundraiser-share-label">Share this fundraiser</span>
+  </button>
+  <span class="fundraiser-share-confirm" hidden>Link copied!</span>
+</div>
+
+<style>
+  .fundraiser-share {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .fundraiser-share-button {
+    all: revert;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    background: #2684ff !important;
+    border: none !important;
+    border-radius: 999px !important;
+    padding: 12px 22px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(38, 132, 255, 0.35);
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+  .fundraiser-share-button:hover {
+    background: #1c6fe0 !important;
+    transform: translateY(-1px);
+  }
+  .fundraiser-share-button svg {
+    width: 18px;
+    height: 18px;
+    color: #fff !important;
+  }
+  .fundraiser-share-confirm {
+    font-size: 12px !important;
+    color: #1a7a1a !important;
+  }
+</style>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-block="fundraiser-share"]').forEach(function (block) {
+      if (block.dataset.dsInit) return;
+      block.dataset.dsInit = "true";
+
+      var button = block.querySelector('.fundraiser-share-button');
+      var confirm = block.querySelector('.fundraiser-share-confirm');
+      var url = block.getAttribute('data-share-url');
+      var title = block.getAttribute('data-share-title');
+      var message = 'Support this fundraiser: ' + title;
+
+      button.addEventListener('click', function () {
+        if (navigator.share) {
+          navigator.share({ title: title, text: message, url: url }).catch(function () {});
+          return;
+        }
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(function () {
+            confirm.hidden = false;
+            setTimeout(function () { confirm.hidden = true; }, 2500);
+          });
+        }
+      });
+    });
+  })();
+</script>

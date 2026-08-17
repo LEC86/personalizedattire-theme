@@ -1,0 +1,135 @@
+{%- comment -%}
+  Generic garment sale price + auto-calculated profit per piece.
+  Usage: {% render 'garment-pricing-block', garment_label: 'Sweatshirt', metafield_key: 'sweatshirt_cost_share', default_cost_share: 21.99 %}
+
+  "Our share" is editable per-product via the metafield named in
+  metafield_key (Admin > Products > this product > Metafields).
+  Falls back to default_cost_share if not set. The resolved cost share is
+  also submitted as a hidden order property so it shows up on the order
+  page, since metafield values themselves are never visible on orders
+  otherwise.
+{%- endcomment -%}
+{%- assign shirt_product_form_id = 'product-form-' | append: section.id -%}
+{%- assign cost_share = product.metafields.custom[metafield_key].value | default: default_cost_share -%}
+{%- assign garment_label_plural = garment_label | downcase | append: 's' -%}
+
+<div class="pricing-block" data-block="garment-pricing" data-cost-share="{{ cost_share }}">
+  <div class="pricing-field">
+    <label>
+      Set the price you want to sale the {{ garment_label_plural }} for <span class="pricing-note">(our share is ${{ cost_share }})</span>
+    </label>
+    <div class="pricing-input-wrap">
+      <span class="pricing-currency">$</span>
+      <input
+        type="text"
+        name="properties[{{ garment_label }} Sale Price]"
+        class="pricing-price-input"
+        inputmode="decimal"
+        autocomplete="off"
+        placeholder="0.00"
+        form="{{ shirt_product_form_id }}"
+        ondblclick="this.select();"
+        oninput="
+          var cleaned = this.value.replace(/[^0-9.]/g, '');
+          var firstDot = cleaned.indexOf('.');
+          if (firstDot !== -1) {
+            cleaned = cleaned.slice(0, firstDot + 1) + cleaned.slice(firstDot + 1).replace(/\./g, '');
+          }
+          if (cleaned !== this.value) { this.value = cleaned; }
+          var block = this.closest('.pricing-block');
+          var costShare = parseFloat(block.getAttribute('data-cost-share')) || 0;
+          var price = parseFloat(cleaned);
+          if (isNaN(price)) { price = 0; }
+          var profit = (price - costShare).toFixed(2);
+          block.querySelector('.pricing-profit-value').textContent = profit;
+          block.querySelector('.pricing-profit-hidden').value = profit;
+          block.querySelector('.pricing-profit-display').classList.toggle('is-negative', profit < 0);
+        "
+      />
+    </div>
+  </div>
+
+  <div class="pricing-field">
+    <label>Profit Per Item Sold</label>
+    <div class="pricing-profit-display">$<span class="pricing-profit-value">0.00</span></div>
+    <input type="hidden" name="properties[{{ garment_label }} Profit Per Piece]" class="pricing-profit-hidden" value="0.00" form="{{ shirt_product_form_id }}" />
+  </div>
+
+  <input type="hidden" name="properties[{{ garment_label }} Cost Share Used]" value="{{ cost_share }}" form="{{ shirt_product_form_id }}" />
+</div>
+
+<style>
+  .pricing-block {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+  }
+  .pricing-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1 1 200px;
+  }
+  .pricing-input-wrap {
+    display: flex;
+    align-items: center;
+    border: 1px solid #b5b5b5;
+    border-radius: 6px;
+    padding: 0 10px;
+    max-width: 160px;
+    background: #fff;
+  }
+  .pricing-currency {
+    font-size: 13px;
+  }
+  .pricing-price-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    box-shadow: none;
+    padding: 8px 0;
+    font-size: 13px;
+    width: 100%;
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  .pricing-price-input::selection {
+    background: #2684ff !important;
+    color: #fff !important;
+  }
+  .pricing-price-input::-moz-selection {
+    background: #2684ff !important;
+    color: #fff !important;
+  }
+  .pricing-profit-display {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 10px;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    max-width: 160px;
+    background: #f8f8f8;
+    color: #1a7a1a !important;
+  }
+  .pricing-profit-display * {
+    color: inherit !important;
+  }
+  .pricing-profit-display.is-negative {
+    color: #c0392b !important;
+  }
+</style>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-block="garment-pricing"]').forEach(function (block) {
+      var input = block.querySelector('.pricing-price-input');
+      var formId = input ? input.getAttribute('form') : null;
+      var form = formId ? document.getElementById(formId) : block.closest('form');
+      if (form) form.setAttribute('enctype', 'multipart/form-data');
+    });
+  })();
+</script>

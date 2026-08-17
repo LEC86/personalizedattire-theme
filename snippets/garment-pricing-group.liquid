@@ -1,0 +1,254 @@
+{%- comment -%}
+  Combined pricing box for all garment types (T-Shirt, Long Sleeve
+  T-Shirt, Sweatshirt, Hoodie) in a single bordered group, with one
+  shipping-fee note at the top. Each garment's "our share" is editable
+  per-product via its own metafield (falls back to the defaults below
+  if unset). Each row's resolved cost share also submits as a hidden
+  order property.
+  Usage: {% render 'garment-pricing-group' %}
+{%- endcomment -%}
+{%- assign shirt_product_form_id = 'product-form-' | append: section.id -%}
+
+{%- assign tshirt_cost_share = product.metafields.custom.tshirt_cost_share.value | default: 12.99 -%}
+{%- assign long_sleeve_cost_share = product.metafields.custom.long_sleeve_cost_share.value | default: 18.99 -%}
+{%- assign sweatshirt_cost_share = product.metafields.custom.sweatshirt_cost_share.value | default: 21.99 -%}
+{%- assign hoodie_cost_share = product.metafields.custom.hoodie_cost_share.value | default: 28.99 -%}
+
+<div class="pricing-group" data-block="garment-pricing-group">
+  <h3 class="pricing-group-title">
+    Set the price you want to sale each type of garment. Buyer will pay an extra flat rate shipping fee of $6.99.
+  </h3>
+
+  {%- comment -%} T-Shirt {%- endcomment -%}
+  <div class="pricing-row" data-cost-share="{{ tshirt_cost_share }}">
+    <div class="pricing-field">
+      <label>T-Shirt <span class="pricing-note">(our share is ${{ tshirt_cost_share }})</span></label>
+      <div class="pricing-input-wrap">
+        <span class="pricing-currency">$</span>
+        <input
+          type="text"
+          name="properties[T-Shirt Sale Price]"
+          class="pricing-price-input"
+          inputmode="decimal"
+          autocomplete="off"
+          placeholder="0.00"
+          form="{{ shirt_product_form_id }}"
+          ondblclick="this.select();"
+          oninput="window.__garmentPricingUpdate(this);"
+        />
+      </div>
+    </div>
+    <div class="pricing-field">
+      <label>Profit Per Item Sold</label>
+      <div class="pricing-profit-display">$<span class="pricing-profit-value">0.00</span></div>
+      <input type="hidden" name="properties[T-Shirt Profit Per Piece]" class="pricing-profit-hidden" value="0.00" form="{{ shirt_product_form_id }}" />
+    </div>
+    <input type="hidden" name="properties[T-Shirt Cost Share Used]" value="{{ tshirt_cost_share }}" form="{{ shirt_product_form_id }}" />
+  </div>
+
+  {%- comment -%} Long Sleeve T-Shirt {%- endcomment -%}
+  <div class="pricing-row" data-cost-share="{{ long_sleeve_cost_share }}">
+    <div class="pricing-field">
+      <label>Long Sleeve T-Shirt <span class="pricing-note">(our share is ${{ long_sleeve_cost_share }})</span></label>
+      <div class="pricing-input-wrap">
+        <span class="pricing-currency">$</span>
+        <input
+          type="text"
+          name="properties[Long Sleeve T-Shirt Sale Price]"
+          class="pricing-price-input"
+          inputmode="decimal"
+          autocomplete="off"
+          placeholder="0.00"
+          form="{{ shirt_product_form_id }}"
+          ondblclick="this.select();"
+          oninput="window.__garmentPricingUpdate(this);"
+        />
+      </div>
+    </div>
+    <div class="pricing-field">
+      <label>Profit Per Item Sold</label>
+      <div class="pricing-profit-display">$<span class="pricing-profit-value">0.00</span></div>
+      <input type="hidden" name="properties[Long Sleeve T-Shirt Profit Per Piece]" class="pricing-profit-hidden" value="0.00" form="{{ shirt_product_form_id }}" />
+    </div>
+    <input type="hidden" name="properties[Long Sleeve T-Shirt Cost Share Used]" value="{{ long_sleeve_cost_share }}" form="{{ shirt_product_form_id }}" />
+  </div>
+
+  {%- comment -%} Sweatshirt {%- endcomment -%}
+  <div class="pricing-row" data-cost-share="{{ sweatshirt_cost_share }}">
+    <div class="pricing-field">
+      <label>Sweatshirt <span class="pricing-note">(our share is ${{ sweatshirt_cost_share }})</span></label>
+      <div class="pricing-input-wrap">
+        <span class="pricing-currency">$</span>
+        <input
+          type="text"
+          name="properties[Sweatshirt Sale Price]"
+          class="pricing-price-input"
+          inputmode="decimal"
+          autocomplete="off"
+          placeholder="0.00"
+          form="{{ shirt_product_form_id }}"
+          ondblclick="this.select();"
+          oninput="window.__garmentPricingUpdate(this);"
+        />
+      </div>
+    </div>
+    <div class="pricing-field">
+      <label>Profit Per Item Sold</label>
+      <div class="pricing-profit-display">$<span class="pricing-profit-value">0.00</span></div>
+      <input type="hidden" name="properties[Sweatshirt Profit Per Piece]" class="pricing-profit-hidden" value="0.00" form="{{ shirt_product_form_id }}" />
+    </div>
+    <input type="hidden" name="properties[Sweatshirt Cost Share Used]" value="{{ sweatshirt_cost_share }}" form="{{ shirt_product_form_id }}" />
+  </div>
+
+  {%- comment -%} Hoodie {%- endcomment -%}
+  <div class="pricing-row pricing-row-last" data-cost-share="{{ hoodie_cost_share }}">
+    <div class="pricing-field">
+      <label>Hoodie <span class="pricing-note">(our share is ${{ hoodie_cost_share }})</span></label>
+      <div class="pricing-input-wrap">
+        <span class="pricing-currency">$</span>
+        <input
+          type="text"
+          name="properties[Hoodie Sale Price]"
+          class="pricing-price-input"
+          inputmode="decimal"
+          autocomplete="off"
+          placeholder="0.00"
+          form="{{ shirt_product_form_id }}"
+          ondblclick="this.select();"
+          oninput="window.__garmentPricingUpdate(this);"
+        />
+      </div>
+    </div>
+    <div class="pricing-field">
+      <label>Profit Per Item Sold</label>
+      <div class="pricing-profit-display">$<span class="pricing-profit-value">0.00</span></div>
+      <input type="hidden" name="properties[Hoodie Profit Per Piece]" class="pricing-profit-hidden" value="0.00" form="{{ shirt_product_form_id }}" />
+    </div>
+    <input type="hidden" name="properties[Hoodie Cost Share Used]" value="{{ hoodie_cost_share }}" form="{{ shirt_product_form_id }}" />
+  </div>
+</div>
+
+<style>
+  .pricing-group {
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+  }
+  .pricing-group-title {
+    margin: 0 0 16px;
+    font-size: 15px;
+    font-weight: 600;
+    color: inherit !important;
+  }
+  .pricing-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px dashed #d9d9d9;
+  }
+  .pricing-row-last {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+  }
+  .pricing-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1 1 200px;
+  }
+  .pricing-field label {
+    color: inherit !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+  }
+  .pricing-note {
+    font-weight: 400 !important;
+    color: #666 !important;
+  }
+  .pricing-input-wrap {
+    display: flex;
+    align-items: center;
+    border: 1px solid #b5b5b5;
+    border-radius: 6px;
+    padding: 0 10px;
+    max-width: 160px;
+    background: #fff;
+  }
+  .pricing-currency {
+    font-size: 13px;
+  }
+  .pricing-price-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    box-shadow: none;
+    padding: 8px 0;
+    font-size: 13px;
+    width: 100%;
+    color: #1a1a1a !important;
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  .pricing-price-input::selection {
+    background: #2684ff !important;
+    color: #fff !important;
+  }
+  .pricing-price-input::-moz-selection {
+    background: #2684ff !important;
+    color: #fff !important;
+  }
+  .pricing-profit-display {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 10px;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    max-width: 160px;
+    background: #f8f8f8;
+    color: #1a7a1a !important;
+  }
+  .pricing-profit-display * {
+    color: inherit !important;
+  }
+  .pricing-profit-display.is-negative {
+    color: #c0392b !important;
+  }
+</style>
+
+<script>
+  (function () {
+    if (window.__garmentPricingUpdate) return;
+
+    window.__garmentPricingUpdate = function (input) {
+      var cleaned = input.value.replace(/[^0-9.]/g, '');
+      var firstDot = cleaned.indexOf('.');
+      if (firstDot !== -1) {
+        cleaned = cleaned.slice(0, firstDot + 1) + cleaned.slice(firstDot + 1).replace(/\./g, '');
+      }
+      if (cleaned !== input.value) input.value = cleaned;
+
+      var row = input.closest('.pricing-row');
+      var costShare = parseFloat(row.getAttribute('data-cost-share')) || 0;
+      var price = parseFloat(cleaned);
+      if (isNaN(price)) price = 0;
+      var profit = (price - costShare).toFixed(2);
+
+      row.querySelector('.pricing-profit-value').textContent = profit;
+      row.querySelector('.pricing-profit-hidden').value = profit;
+      row.querySelector('.pricing-profit-display').classList.toggle('is-negative', profit < 0);
+    };
+
+    document.querySelectorAll('[data-block="garment-pricing-group"]').forEach(function (group) {
+      if (group.dataset.dsInit) return;
+      group.dataset.dsInit = "true";
+      var input = group.querySelector('.pricing-price-input');
+      var formId = input ? input.getAttribute('form') : null;
+      var form = formId ? document.getElementById(formId) : group.closest('form');
+      if (form) form.setAttribute('enctype', 'multipart/form-data');
+    });
+  })();
+</script>

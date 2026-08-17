@@ -1,0 +1,145 @@
+{%- comment -%}
+  Sticky progress stepper for the "options" (org intake) product page.
+  Highlights which section the org is currently scrolled to, and lets
+  them click a step to jump straight to that section.
+  Usage: {% render 'fundraiser-progress-stepper' %}
+{%- endcomment -%}
+
+<div class="fundraiser-stepper" data-block="fundraiser-stepper">
+  <div class="fundraiser-stepper-track">
+    <button type="button" class="fundraiser-step" data-step-target="[data-block='shirt-design']">
+      <span class="fundraiser-step-dot">1</span>
+      <span class="fundraiser-step-label">Designs</span>
+    </button>
+    <button type="button" class="fundraiser-step" data-step-target="[data-block='tshirt-pricing'], [data-block='garment-pricing']">
+      <span class="fundraiser-step-dot">2</span>
+      <span class="fundraiser-step-label">Pricing</span>
+    </button>
+    <button type="button" class="fundraiser-step" data-step-target="[data-block='campaign-display']">
+      <span class="fundraiser-step-dot">3</span>
+      <span class="fundraiser-step-label">Campaign</span>
+    </button>
+    <button type="button" class="fundraiser-step" data-step-target="[data-block='org-contact']">
+      <span class="fundraiser-step-dot">4</span>
+      <span class="fundraiser-step-label">Org Info</span>
+    </button>
+    <button type="button" class="fundraiser-step" data-step-target="[data-block='payout']">
+      <span class="fundraiser-step-dot">5</span>
+      <span class="fundraiser-step-label">Payout</span>
+    </button>
+  </div>
+</div>
+
+<style>
+  .fundraiser-stepper {
+    position: sticky;
+    top: 0;
+    z-index: 6;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin: 0 0 16px;
+    overflow-x: auto;
+  }
+  .fundraiser-stepper-track {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: max-content;
+  }
+  .fundraiser-step {
+    all: revert;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer;
+    padding: 4px 8px !important;
+    border-radius: 6px;
+    color: #888 !important;
+    transition: color 0.15s ease;
+  }
+  .fundraiser-step:not(:last-child)::after {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 1px;
+    background: #d9d9d9;
+    margin-left: 8px;
+  }
+  .fundraiser-step-dot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #e5e5e5;
+    color: #666 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    flex: 0 0 auto;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .fundraiser-step-label {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    white-space: nowrap;
+    color: inherit !important;
+  }
+  .fundraiser-step.is-active {
+    color: #1a1a1a !important;
+  }
+  .fundraiser-step.is-active .fundraiser-step-dot {
+    background: #2684ff;
+    color: #fff !important;
+  }
+</style>
+
+<script>
+  (function () {
+    var stepper = document.querySelector('[data-block="fundraiser-stepper"]');
+    if (!stepper || stepper.dataset.dsInit) return;
+    stepper.dataset.dsInit = "true";
+
+    var steps = Array.prototype.slice.call(stepper.querySelectorAll('.fundraiser-step'));
+
+    var sections = steps.map(function (step) {
+      var selector = step.getAttribute('data-step-target');
+      var el = document.querySelector(selector.split(',')[0].trim());
+      return { step: step, el: el };
+    }).filter(function (s) { return s.el; });
+
+    sections.forEach(function (s) {
+      s.step.addEventListener('click', function () {
+        var stepperHeight = stepper.offsetHeight || 0;
+        var top = s.el.getBoundingClientRect().top + window.pageYOffset - stepperHeight - 16;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      });
+    });
+
+    function setActive(el) {
+      sections.forEach(function (s) {
+        s.step.classList.toggle('is-active', s.el === el);
+      });
+    }
+
+    if ('IntersectionObserver' in window && sections.length) {
+      var observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              var match = sections.find(function (s) { return s.el === entry.target; });
+              if (match) setActive(match.el);
+            }
+          });
+        },
+        { rootMargin: '-20% 0px -70% 0px', threshold: 0 }
+      );
+      sections.forEach(function (s) { observer.observe(s.el); });
+      setActive(sections[0].el);
+    }
+  })();
+</script>

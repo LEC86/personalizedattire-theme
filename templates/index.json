@@ -1,0 +1,93 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "multirow_9rngcE": {
+      "type": "multirow",
+      "blocks": {
+        "row_AerwJy": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/FRONTPAGEBIG.jpg",
+            "caption": "Easy Online Fundraising",
+            "heading": "Launch Your Custom Apparel Fundraiser in Minutes",
+            "text": "<p>Create a professional fundraising campaign without the hassle. Upload your design, choose your selling price, and we'll build your custom storefront. Your supporters order directly from your page, we handle production and shipping, and your organization keeps the profit. It's fundraising made simple.<br/><br/></p>",
+            "button_label": "Create My Fundraiser",
+            "button_link": "shopify://products/custom-apparel-made-easy-copy"
+          }
+        },
+        "row_EpRUB9": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Aug_3_2026_06_42_57_AM.png",
+            "caption": "Business Logo Printing",
+            "heading": "Order Custom Apparel Without the Hassle",
+            "text": "<p>Turn your company logo into professionally printed apparel in just a few clicks. Upload your artwork and we'll build a personalized online store where you can order branded t-shirts, sweatshirts, and hoodies on demand. We handle the setup, printing, and fulfillment, so you can focus on running your business.<br/><br/></p>",
+            "button_label": "Upload My Logo",
+            "button_link": "shopify://products/business-upload"
+          }
+        }
+      },
+      "block_order": [
+        "row_AerwJy",
+        "row_EpRUB9"
+      ],
+      "name": "t:sections.multirow.presets.name",
+      "settings": {
+        "image_height": "medium",
+        "desktop_image_width": "medium",
+        "image_layout": "alternate-left",
+        "heading_size": "h1",
+        "text_style": "body",
+        "button_style": "secondary",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "row_color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "disabled": true,
+      "settings": {
+        "collection": "all",
+        "products_to_show": 4,
+        "title": "",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 0,
+        "padding_bottom": 40
+      }
+    }
+  },
+  "order": [
+    "multirow_9rngcE",
+    "featured_collection"
+  ]
+}
