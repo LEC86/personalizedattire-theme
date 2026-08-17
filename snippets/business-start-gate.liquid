@@ -1,0 +1,93 @@
+{%- comment -%}
+  Keeps the business shirt order fields hidden until the customer clicks
+  a "Start My Shirts" button. Also binds to any existing button/link on
+  the page whose visible text is "Start My Shirts".
+{%- endcomment -%}
+
+<div class="business-start-gate" data-business-start-gate>
+  <button type="button" class="business-start-gate__button" data-business-start-button>
+    Start My Shirts
+  </button>
+</div>
+
+<style>
+  .business-start-gate {
+    margin: 18px 0 8px;
+    text-align: center;
+  }
+
+  .business-start-gate__button {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 22px;
+    border: 0;
+    border-radius: 8px;
+    background: #2684ff;
+    color: #fff;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.2;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(38, 132, 255, 0.24);
+  }
+
+  .business-start-gate__button:hover {
+    background: #1c6fe0;
+  }
+
+  html:not(.business-shirt-form-started) .design-upload-block,
+  html:not(.business-shirt-form-started) [data-block="org-contact"],
+  html:not(.business-shirt-form-started) [data-block="notes-questions"] {
+    display: none !important;
+  }
+
+  html.business-shirt-form-started .business-start-gate {
+    display: none;
+  }
+</style>
+
+<script>
+(function () {
+  if (window.businessStartGateInitialized) return;
+  window.businessStartGateInitialized = true;
+
+  var root = document.documentElement;
+
+  function normalizeText(value) {
+    return (value || '').replace(/\s+/g, ' ').trim().toLowerCase();
+  }
+
+  function startShirts(event) {
+    if (event) event.preventDefault();
+    root.classList.add('business-shirt-form-started');
+
+    var firstBlock = document.getElementById('shirt-design-block-1');
+    if (firstBlock) {
+      firstBlock.hidden = false;
+      window.setTimeout(function () {
+        firstBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    }
+  }
+
+  function bindStartButtons() {
+    document.querySelectorAll('button, a, [role="button"]').forEach(function (el) {
+      if (el.dataset.businessStartBound === 'true') return;
+
+      var isGateButton = el.hasAttribute('data-business-start-button');
+      var isNamedButton = normalizeText(el.textContent) === 'start my shirts';
+
+      if (isGateButton || isNamedButton) {
+        el.dataset.businessStartBound = 'true';
+        el.addEventListener('click', startShirts);
+      }
+    });
+  }
+
+  bindStartButtons();
+
+  var observer = new MutationObserver(bindStartButtons);
+  observer.observe(document.body, { childList: true, subtree: true });
+})();
+</script>
