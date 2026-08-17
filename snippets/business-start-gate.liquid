@@ -1,7 +1,9 @@
 {%- comment -%}
   Keeps the Shopify Business Shirt Request form hidden until the customer
   clicks a "Start My Shirts" button. The form lives in the apps section with
-  template section key 17869544649a9a2a30.
+  template section key 17869544649a9a2a30. When the page loads, move that
+  form section directly before the product description so the request form
+  appears before the long description instead of at the bottom of the page.
 {%- endcomment -%}
 
 <div class="business-start-gate" data-business-start-gate>
@@ -68,8 +70,19 @@
     return document.querySelector('[id*="17869544649a9a2a30"]');
   }
 
+  function moveFormBeforeDescription() {
+    var formSection = getRequestFormSection();
+    var description = document.querySelector('.product__description');
+
+    if (!formSection || !description || formSection.dataset.businessFormMoved === 'true') return;
+
+    description.parentNode.insertBefore(formSection, description);
+    formSection.dataset.businessFormMoved = 'true';
+  }
+
   function startShirts(event) {
     if (event) event.preventDefault();
+    moveFormBeforeDescription();
     root.classList.add('business-shirt-form-started');
 
     window.setTimeout(function () {
@@ -94,9 +107,14 @@
     });
   }
 
-  bindStartButtons();
+  function initializeLayout() {
+    moveFormBeforeDescription();
+    bindStartButtons();
+  }
 
-  var observer = new MutationObserver(bindStartButtons);
+  initializeLayout();
+
+  var observer = new MutationObserver(initializeLayout);
   observer.observe(document.body, { childList: true, subtree: true });
 })();
 </script>
