@@ -30,49 +30,6 @@
             "custom_liquid": "{% render 'business-start-gate' %}"
           }
         },
-        "shirt_design_1_block": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "{% render 'shirt-design-block-3upload', design_number: 1 %}"
-          }
-        },
-        "shirt_design_2_block": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "{% render 'shirt-design-block-3upload', design_number: 2 %}"
-          }
-        },
-        "shirt_design_3_block": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "{% render 'shirt-design-block-3upload', design_number: 3 %}"
-          }
-        },
-        "shirt_design_4_block": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "{% render 'shirt-design-block-3upload', design_number: 4 %}"
-          }
-        },
-        "contact_details_block": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "{% render 'org-contact-block', heading: 'Contact Details', show_mailing_address: false, show_organization_name: false, email_note: 'for delivering store link', phone_note: 'Optional, for delivering store link' %}"
-          }
-        },
-        "notes_questions_block": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "{% render 'notes-questions-block' %}"
-          }
-        },
-        "buy_buttons": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_dynamic_checkout": false,
-            "show_gift_card_recipient": true
-          }
-        },
         "description": {
           "type": "description",
           "settings": {}
@@ -82,13 +39,6 @@
         "hide_installments_block",
         "business_offer_intro_block",
         "business_start_gate_block",
-        "shirt_design_1_block",
-        "shirt_design_2_block",
-        "shirt_design_3_block",
-        "shirt_design_4_block",
-        "contact_details_block",
-        "notes_questions_block",
-        "buy_buttons",
         "description"
       ],
       "settings": {
@@ -115,9 +65,9 @@
           "settings": {
             "form_id": "1115742",
             "text_color": "#202020",
-            "button_background_color": "#202020",
-            "button_label_color": "#FFFFFF",
-            "links_color": "#1878B9",
+            "button_background_color": "#E3FC02",
+            "button_label_color": "#111111",
+            "links_color": "#202020",
             "errors_color": "#E02229",
             "text_alignment": "center",
             "form_alignment": "center",
