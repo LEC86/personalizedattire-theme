@@ -1,6 +1,6 @@
 {%- comment -%}
-  Shirt design upload block with THREE upload fields: Front Pocket
-  Design, Front Full Design, and Back Design. Front Pocket and Front
+  Shirt design upload block with THREE upload fields: Front Left Chest
+  Design, Front Full Design, and Back Design. Front Left Chest and Front
   Full are mutually exclusive -- uploading one while the other already
   has a file blocks the upload and shows an alert asking to remove the
   other one first. Same chained reveal behavior as the standard block
@@ -24,10 +24,10 @@
   <div class="design-upload-row">
     <div class="design-upload-field" data-design-role="front-pocket">
       <label>
-        <span>Front Pocket Design ($7.99)</span>
+        <span>Front Left Chest Design ($7.99)</span>
         <input
           type="file"
-          name="properties[Design {{ design_number }} - Front Pocket Design]"
+          name="properties[Design {{ design_number }} - Front Left Chest Design]"
           class="design-file-input"
           data-design-role-input="front-pocket"
           accept="image/*,.pdf,.ai,.eps"
@@ -243,7 +243,7 @@
     notifyNextBlock();
   }
 
-  // Front Pocket and Front Full are mutually exclusive. If the other
+  // Front Left Chest and Front Full are mutually exclusive. If the other
   // one already has a file, block this selection and alert the user.
   function guardFrontConflict(changedInput, otherInput, changedLabel, otherLabel) {
     if (!changedInput || !otherInput) return false;
@@ -251,7 +251,7 @@
         otherInput.files && otherInput.files.length > 0) {
       changedInput.value = '';
       updatePreview(changedInput);
-      alert('You can only upload one of "Front Pocket Design" or "Front Full Design". Please remove the ' + otherLabel + ' before uploading the ' + changedLabel + '.');
+      alert('You can only upload one of "Front Left Chest Design" or "Front Full Design". Please remove the ' + otherLabel + ' before uploading the ' + changedLabel + '.');
       return true;
     }
     return false;
@@ -293,11 +293,11 @@
   fileInputs.forEach(function (input) {
     input.addEventListener('change', function () {
       if (input === frontPocketInput) {
-        if (guardFrontConflict(frontPocketInput, frontFullInput, 'Front Pocket Design', 'Front Full Design')) {
+        if (guardFrontConflict(frontPocketInput, frontFullInput, 'Front Left Chest Design', 'Front Full Design')) {
           return;
         }
       } else if (input === frontFullInput) {
-        if (guardFrontConflict(frontFullInput, frontPocketInput, 'Front Full Design', 'Front Pocket Design')) {
+        if (guardFrontConflict(frontFullInput, frontPocketInput, 'Front Full Design', 'Front Left Chest Design')) {
           return;
         }
       }
