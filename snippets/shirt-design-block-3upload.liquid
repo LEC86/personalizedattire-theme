@@ -26,216 +26,58 @@
       <div class="design-upload-label">Front Left Chest Design <strong>($7.99)</strong></div>
       <label class="design-upload-button">
         <span>Upload Left Chest Design</span>
-        <input
-          type="file"
-          name="properties[Design {{ design_number }} - Front Left Chest Design]"
-          class="design-file-input"
-          data-design-role-input="front-pocket"
-          accept="image/*,.pdf,.ai,.eps"
-          form="{{ shirt_product_form_id }}"
-        />
+        <input type="file" name="properties[Design {{ design_number }} - Front Left Chest Design]" class="design-file-input" data-design-role-input="front-pocket" accept="image/*,.pdf,.ai,.eps" form="{{ shirt_product_form_id }}" />
       </label>
-      <div class="design-file-preview" hidden>
-        <img class="design-file-preview-img" alt="" hidden />
-        <span class="design-file-preview-name"></span>
-        <button type="button" class="design-file-remove">&times; Remove</button>
-      </div>
+      <div class="design-file-preview" hidden><img class="design-file-preview-img" alt="" hidden /><span class="design-file-preview-name"></span><button type="button" class="design-file-remove">&times; Remove</button></div>
     </div>
 
     <div class="design-upload-field" data-design-role="front-full">
       <div class="design-upload-label">Front Full Design <strong>(+$3)</strong></div>
       <label class="design-upload-button">
         <span>Upload Full Front Design</span>
-        <input
-          type="file"
-          name="properties[Design {{ design_number }} - Front Full Design]"
-          class="design-file-input"
-          data-design-role-input="front-full"
-          accept="image/*,.pdf,.ai,.eps"
-          form="{{ shirt_product_form_id }}"
-        />
+        <input type="file" name="properties[Design {{ design_number }} - Front Full Design]" class="design-file-input" data-design-role-input="front-full" accept="image/*,.pdf,.ai,.eps" form="{{ shirt_product_form_id }}" />
       </label>
-      <div class="design-file-preview" hidden>
-        <img class="design-file-preview-img" alt="" hidden />
-        <span class="design-file-preview-name"></span>
-        <button type="button" class="design-file-remove">&times; Remove</button>
-      </div>
+      <div class="design-file-preview" hidden><img class="design-file-preview-img" alt="" hidden /><span class="design-file-preview-name"></span><button type="button" class="design-file-remove">&times; Remove</button></div>
     </div>
 
     <div class="design-upload-field">
       <div class="design-upload-label">Back Design <strong>(+$3)</strong></div>
       <label class="design-upload-button">
         <span>Upload Back Design</span>
-        <input
-          type="file"
-          name="properties[Design {{ design_number }} - Back Design]"
-          class="design-file-input"
-          accept="image/*,.pdf,.ai,.eps"
-          form="{{ shirt_product_form_id }}"
-        />
+        <input type="file" name="properties[Design {{ design_number }} - Back Design]" class="design-file-input" accept="image/*,.pdf,.ai,.eps" form="{{ shirt_product_form_id }}" />
       </label>
-      <div class="design-file-preview" hidden>
-        <img class="design-file-preview-img" alt="" hidden />
-        <span class="design-file-preview-name"></span>
-        <button type="button" class="design-file-remove">&times; Remove</button>
-      </div>
+      <div class="design-file-preview" hidden><img class="design-file-preview-img" alt="" hidden /><span class="design-file-preview-name"></span><button type="button" class="design-file-remove">&times; Remove</button></div>
     </div>
   </div>
 
   <div class="design-extra-fields" hidden>
     <label class="design-instructions-field">
       <span>{{ design_title }} Instructions (optional)</span>
-      <textarea
-        name="properties[Design {{ design_number }} Instructions]"
-        rows="3"
-        placeholder="notes for the printer"
-        form="{{ shirt_product_form_id }}"
-      ></textarea>
+      <textarea name="properties[Design {{ design_number }} Instructions]" rows="3" placeholder="notes for the printer" form="{{ shirt_product_form_id }}"></textarea>
     </label>
   </div>
 </div>
 
 <style>
-  .design-upload-block {
-    border: 1px solid #d9d9d9;
-    border-radius: 10px;
-    padding: 18px;
-    margin: 16px 0;
-    font-size: 14px;
-    background: #fff;
-  }
-  .design-upload-title {
-    margin: 0 0 14px;
-    font-size: 16px;
-    font-weight: 700;
-  }
-  .design-upload-row {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .design-upload-field {
-    flex: 1 1 200px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .design-upload-label {
-    font-size: 13px;
-    font-weight: 700;
-    line-height: 1.35;
-  }
-  .design-upload-label strong {
-    font-weight: 800;
-  }
-  .design-upload-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 50px;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 12px 14px;
-    border: 2px solid #2684ff;
-    border-radius: 8px;
-    background: #2684ff;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 800;
-    line-height: 1.2;
-    text-align: center;
-    cursor: pointer;
-    transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
-  }
-  .design-upload-button:hover {
-    background: #1c6fe0;
-    border-color: #1c6fe0;
-    transform: translateY(-1px);
-  }
-  .design-upload-button:focus-within {
-    outline: 3px solid rgba(38, 132, 255, 0.25);
-    outline-offset: 2px;
-  }
-  .design-upload-button input[type="file"] {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    padding: 0 !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    clip: rect(0, 0, 0, 0) !important;
-    white-space: nowrap !important;
-    border: 0 !important;
-  }
-  .design-file-preview {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 4px;
-    padding: 8px;
-    border: 1px solid #e4e4e4;
-    border-radius: 8px;
-    background: #fafafa;
-    flex-wrap: wrap;
-  }
-  .design-file-preview-img {
-    width: 48px;
-    height: 48px;
-    object-fit: cover;
-    border-radius: 6px;
-    border: 1px solid #d9d9d9;
-    flex: 0 0 auto;
-  }
-  .design-file-preview-name {
-    font-size: 12px !important;
-    color: #555 !important;
-    word-break: break-all;
-  }
-  .design-file-remove {
-    all: revert;
-    background: none !important;
-    border: none !important;
-    color: #c0392b !important;
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    cursor: pointer;
-    padding: 2px 4px !important;
-    margin-left: auto;
-  }
-  .design-file-remove:hover {
-    text-decoration: underline;
-  }
-  .design-extra-fields {
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px dashed #d9d9d9;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .design-instructions-field {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .design-instructions-field textarea {
-    font-family: inherit;
-    font-size: 13px;
-    padding: 10px;
-    border: 1px solid #b5b5b5;
-    border-radius: 6px;
-    resize: vertical;
-  }
-
-  @media screen and (max-width: 749px) {
-    .design-upload-field {
-      flex: 1 1 100%;
-    }
-    .design-upload-button {
-      min-height: 52px;
-      font-size: 15px;
-    }
-  }
+  .design-upload-block { border: 1px solid #d9d9d9; border-radius: 10px; padding: 18px; margin: 16px 0; font-size: 14px; background: #fff; }
+  .design-upload-title { margin: 0 0 14px; font-size: 16px; font-weight: 700; }
+  .design-upload-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .design-upload-field { flex: 1 1 200px; display: flex; flex-direction: column; gap: 8px; }
+  .design-upload-label { font-size: 13px; font-weight: 700; line-height: 1.35; }
+  .design-upload-label strong { font-weight: 800; }
+  .design-upload-button { display: flex; align-items: center; justify-content: center; min-height: 50px; width: 100%; box-sizing: border-box; padding: 12px 14px; border: 2px solid #111; border-radius: 8px; background: #E3FC02; color: #111; font-size: 14px; font-weight: 800; line-height: 1.2; text-align: center; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease; }
+  .design-upload-button:hover { background: #d3ea02; border-color: #111; transform: translateY(-1px); }
+  .design-upload-button:focus-within { outline: 3px solid rgba(227, 252, 2, 0.35); outline-offset: 2px; }
+  .design-upload-button input[type="file"] { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
+  .design-file-preview { display: flex; align-items: center; gap: 8px; margin-top: 4px; padding: 8px; border: 1px solid #e4e4e4; border-radius: 8px; background: #fafafa; flex-wrap: wrap; }
+  .design-file-preview-img { width: 48px; height: 48px; object-fit: cover; border-radius: 6px; border: 1px solid #d9d9d9; flex: 0 0 auto; }
+  .design-file-preview-name { font-size: 12px !important; color: #555 !important; word-break: break-all; }
+  .design-file-remove { all: revert; background: none !important; border: none !important; color: #c0392b !important; font-size: 12px !important; font-weight: 700 !important; cursor: pointer; padding: 2px 4px !important; margin-left: auto; }
+  .design-file-remove:hover { text-decoration: underline; }
+  .design-extra-fields { margin-top: 16px; padding-top: 16px; border-top: 1px dashed #d9d9d9; display: flex; flex-direction: column; gap: 14px; }
+  .design-instructions-field { display: flex; flex-direction: column; gap: 6px; }
+  .design-instructions-field textarea { font-family: inherit; font-size: 13px; padding: 10px; border: 1px solid #b5b5b5; border-radius: 6px; resize: vertical; }
+  @media screen and (max-width: 749px) { .design-upload-field { flex: 1 1 100%; } .design-upload-button { min-height: 52px; font-size: 15px; } }
 </style>
 
 <script>
@@ -244,135 +86,51 @@
   var root = document.getElementById('shirt-design-block-' + num);
   if (!root || root.dataset.dsInit) return;
   root.dataset.dsInit = "true";
-
   var formId = root.getAttribute('data-form-id');
   var form = formId ? document.getElementById(formId) : root.closest('form');
-  if (form) {
-    form.setAttribute('enctype', 'multipart/form-data');
-  }
-
+  if (form) form.setAttribute('enctype', 'multipart/form-data');
   var fileInputs = root.querySelectorAll('.design-file-input');
   var extraFields = root.querySelector('.design-extra-fields');
   var frontPocketInput = root.querySelector('[data-design-role-input="front-pocket"]');
   var frontFullInput = root.querySelector('[data-design-role-input="front-full"]');
-
-  function anyFileSelected(inputs) {
-    return Array.prototype.some.call(inputs, function (input) {
-      return input.files && input.files.length > 0;
-    });
-  }
-
-  function updateOwnExtraVisibility() {
-    extraFields.hidden = !anyFileSelected(fileInputs);
-  }
-
+  function anyFileSelected(inputs) { return Array.prototype.some.call(inputs, function (input) { return input.files && input.files.length > 0; }); }
+  function updateOwnExtraVisibility() { extraFields.hidden = !anyFileSelected(fileInputs); }
   function updatePreview(input) {
-    var field = input.closest('.design-upload-field');
-    var preview = field.querySelector('.design-file-preview');
-    var img = field.querySelector('.design-file-preview-img');
-    var nameLabel = field.querySelector('.design-file-preview-name');
-    var file = input.files && input.files[0];
-
-    if (!file) {
-      preview.hidden = true;
-      img.hidden = true;
-      img.removeAttribute('src');
-      nameLabel.textContent = '';
-      return;
-    }
-
+    var field = input.closest('.design-upload-field'), preview = field.querySelector('.design-file-preview'), img = field.querySelector('.design-file-preview-img'), nameLabel = field.querySelector('.design-file-preview-name'), file = input.files && input.files[0];
+    if (!file) { preview.hidden = true; img.hidden = true; img.removeAttribute('src'); nameLabel.textContent = ''; return; }
     preview.hidden = false;
-
-    if (file.type && file.type.indexOf('image/') === 0) {
-      var url = URL.createObjectURL(file);
-      img.src = url;
-      img.hidden = false;
-      nameLabel.textContent = file.name;
-    } else {
-      img.hidden = true;
-      img.removeAttribute('src');
-      nameLabel.textContent = file.name;
-    }
+    if (file.type && file.type.indexOf('image/') === 0) { var url = URL.createObjectURL(file); img.src = url; img.hidden = false; nameLabel.textContent = file.name; }
+    else { img.hidden = true; img.removeAttribute('src'); nameLabel.textContent = file.name; }
   }
-
-  function clearSingleUpload(input) {
-    input.value = '';
-    updatePreview(input);
-    updateOwnExtraVisibility();
-    notifyNextBlock();
-  }
-
-  // Front Left Chest and Front Full are mutually exclusive. If the other
-  // one already has a file, block this selection and alert the user.
+  function clearSingleUpload(input) { input.value = ''; updatePreview(input); updateOwnExtraVisibility(); notifyNextBlock(); }
   function guardFrontConflict(changedInput, otherInput, changedLabel, otherLabel) {
     if (!changedInput || !otherInput) return false;
-    if (changedInput.files && changedInput.files.length > 0 &&
-        otherInput.files && otherInput.files.length > 0) {
-      changedInput.value = '';
-      updatePreview(changedInput);
-      alert('You can only upload one of "Front Left Chest Design" or "Front Full Design". Please remove the ' + otherLabel + ' before uploading the ' + changedLabel + '.');
-      return true;
+    if (changedInput.files && changedInput.files.length > 0 && otherInput.files && otherInput.files.length > 0) {
+      changedInput.value = ''; updatePreview(changedInput); alert('You can only upload one of "Front Left Chest Design" or "Front Full Design". Please remove the ' + otherLabel + ' before uploading the ' + changedLabel + '.'); return true;
     }
     return false;
   }
-
   function setBlockVisibility(el, visible) {
-    if (!el) return;
-    el.hidden = !visible;
+    if (!el) return; el.hidden = !visible;
     if (!visible) {
-      var inputs = el.querySelectorAll('.design-file-input');
-      inputs.forEach(function (i) { i.value = ''; });
-
-      var extra = el.querySelector('.design-extra-fields');
-      if (extra) extra.hidden = true;
-
-      var textarea = el.querySelector('.design-extra-fields textarea');
-      if (textarea) textarea.value = '';
-
+      el.querySelectorAll('.design-file-input').forEach(function (i) { i.value = ''; });
+      var extra = el.querySelector('.design-extra-fields'); if (extra) extra.hidden = true;
+      var textarea = el.querySelector('.design-extra-fields textarea'); if (textarea) textarea.value = '';
       el.querySelectorAll('.design-file-preview').forEach(function (p) { p.hidden = true; });
-      el.querySelectorAll('.design-file-preview-img').forEach(function (i) {
-        i.hidden = true;
-        i.removeAttribute('src');
-      });
+      el.querySelectorAll('.design-file-preview-img').forEach(function (i) { i.hidden = true; i.removeAttribute('src'); });
       el.querySelectorAll('.design-file-preview-name').forEach(function (n) { n.textContent = ''; });
-
-      var nextNum = parseInt(el.dataset.designNumber, 10) + 1;
-      var nextEl = document.getElementById('shirt-design-block-' + nextNum);
-      setBlockVisibility(nextEl, false);
+      var nextNum = parseInt(el.dataset.designNumber, 10) + 1; setBlockVisibility(document.getElementById('shirt-design-block-' + nextNum), false);
     }
   }
-
-  function notifyNextBlock() {
-    var nextEl = document.getElementById('shirt-design-block-' + (num + 1));
-    if (nextEl) {
-      setBlockVisibility(nextEl, anyFileSelected(fileInputs));
-    }
-  }
-
+  function notifyNextBlock() { var nextEl = document.getElementById('shirt-design-block-' + (num + 1)); if (nextEl) setBlockVisibility(nextEl, anyFileSelected(fileInputs)); }
   fileInputs.forEach(function (input) {
     input.addEventListener('change', function () {
-      if (input === frontPocketInput) {
-        if (guardFrontConflict(frontPocketInput, frontFullInput, 'Front Left Chest Design', 'Front Full Design')) {
-          return;
-        }
-      } else if (input === frontFullInput) {
-        if (guardFrontConflict(frontFullInput, frontPocketInput, 'Front Full Design', 'Front Left Chest Design')) {
-          return;
-        }
-      }
-
-      updateOwnExtraVisibility();
-      updatePreview(input);
-      notifyNextBlock();
+      if (input === frontPocketInput && guardFrontConflict(frontPocketInput, frontFullInput, 'Front Left Chest Design', 'Front Full Design')) return;
+      if (input === frontFullInput && guardFrontConflict(frontFullInput, frontPocketInput, 'Front Full Design', 'Front Left Chest Design')) return;
+      updateOwnExtraVisibility(); updatePreview(input); notifyNextBlock();
     });
-
-    var field = input.closest('.design-upload-field');
-    var removeBtn = field.querySelector('.design-file-remove');
-    if (removeBtn) {
-      removeBtn.addEventListener('click', function () {
-        clearSingleUpload(input);
-      });
-    }
+    var field = input.closest('.design-upload-field'), removeBtn = field.querySelector('.design-file-remove');
+    if (removeBtn) removeBtn.addEventListener('click', function () { clearSingleUpload(input); });
   });
 })();
 </script>
