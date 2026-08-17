@@ -1,7 +1,7 @@
 {%- comment -%}
-  Keeps the business shirt order fields and Add to Cart area hidden until
-  the customer clicks a "Start My Shirts" button. Also binds to any existing
-  button/link on the page whose visible text is "Start My Shirts".
+  Keeps the Shopify Business Shirt Request form hidden until the customer
+  clicks a "Start My Shirts" button. The form lives in the apps section with
+  template section key 17869544649a9a2a30.
 {%- endcomment -%}
 
 <div class="business-start-gate" data-business-start-gate>
@@ -44,13 +44,7 @@
     background: #d3ea02;
   }
 
-  html:not(.business-shirt-form-started) .design-upload-block,
-  html:not(.business-shirt-form-started) [data-block="org-contact"],
-  html:not(.business-shirt-form-started) [data-block="notes-questions"],
-  html:not(.business-shirt-form-started) .product-form__buttons,
-  html:not(.business-shirt-form-started) .product-form__submit,
-  html:not(.business-shirt-form-started) form[data-type="add-to-cart-form"],
-  html:not(.business-shirt-form-started) product-form.product-form {
+  html:not(.business-shirt-form-started) [id*="17869544649a9a2a30"] {
     display: none !important;
   }
 
@@ -70,17 +64,20 @@
     return (value || '').replace(/\s+/g, ' ').trim().toLowerCase();
   }
 
+  function getRequestFormSection() {
+    return document.querySelector('[id*="17869544649a9a2a30"]');
+  }
+
   function startShirts(event) {
     if (event) event.preventDefault();
     root.classList.add('business-shirt-form-started');
 
-    var firstBlock = document.getElementById('shirt-design-block-1');
-    if (firstBlock) {
-      firstBlock.hidden = false;
-      window.setTimeout(function () {
-        firstBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 50);
-    }
+    window.setTimeout(function () {
+      var formSection = getRequestFormSection();
+      if (formSection) {
+        formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 80);
   }
 
   function bindStartButtons() {
