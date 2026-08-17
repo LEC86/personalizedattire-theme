@@ -4,6 +4,8 @@
   template section key 17869544649a9a2a30. When the page loads, move that
   form section directly before the product description so the request form
   appears before the long description instead of at the bottom of the page.
+  If the page is loaded with ?another_design=1, automatically reopen the form
+  so customers can submit another shirt design after a completed submission.
 {%- endcomment -%}
 
 <div class="business-start-gate" data-business-start-gate>
@@ -80,17 +82,23 @@
     formSection.dataset.businessFormMoved = 'true';
   }
 
-  function startShirts(event) {
-    if (event) event.preventDefault();
+  function showRequestForm(shouldScroll) {
     moveFormBeforeDescription();
     root.classList.add('business-shirt-form-started');
 
-    window.setTimeout(function () {
-      var formSection = getRequestFormSection();
-      if (formSection) {
-        formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 80);
+    if (shouldScroll) {
+      window.setTimeout(function () {
+        var formSection = getRequestFormSection();
+        if (formSection) {
+          formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 120);
+    }
+  }
+
+  function startShirts(event) {
+    if (event) event.preventDefault();
+    showRequestForm(true);
   }
 
   function bindStartButtons() {
@@ -113,6 +121,11 @@
   }
 
   initializeLayout();
+
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('another_design') === '1') {
+    showRequestForm(true);
+  }
 
   var observer = new MutationObserver(initializeLayout);
   observer.observe(document.body, { childList: true, subtree: true });
