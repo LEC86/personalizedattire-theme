@@ -35,6 +35,14 @@ document.addEventListener('DOMContentLoaded', function () {
     var modalOverlay = null;
     var modalContent = null;
 
+    function getOpenModal() {
+      return document.querySelector('product-modal[open], product-modal.is-active, product-modal.active');
+    }
+
+    function isModalOpen() {
+      return !!getOpenModal();
+    }
+
     function getActiveMediaImage() {
       if (!mediaWrapper) return null;
       return (
@@ -46,6 +54,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function syncOverlaySize() {
       if (!overlay || !mediaWrapper) return;
+
+      // The normal page overlay should disappear while Shopify's enlarged
+      // product-image modal is open. Otherwise it remains visible behind the
+      // modal and looks like a second, smaller duplicate design.
+      if (isModalOpen()) {
+        overlay.hidden = true;
+        return;
+      }
+
+      if (!currentOverlaySrc) {
+        overlay.hidden = true;
+        return;
+      }
+
+      overlay.hidden = false;
       var activeImg = getActiveMediaImage();
       var target = activeImg || mediaWrapper;
       var wrapperRect = mediaWrapper.getBoundingClientRect();
@@ -58,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function getVisibleModalImage() {
-      var modal = document.querySelector('product-modal[open], product-modal.is-active, product-modal.active');
+      var modal = getOpenModal();
       if (!modal) return null;
 
       var images = modal.querySelectorAll('.product-media-modal__content > img[data-media-id], .product-media-modal__content img[data-media-id]');
@@ -98,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
         modalOverlay.style.objectFit = 'contain';
         modalOverlay.style.pointerEvents = 'none';
         modalOverlay.style.zIndex = '5';
+        modalOverlay.style.imageRendering = 'auto';
         modalOverlay.addEventListener('load', syncModalOverlaySize);
         modalContent.appendChild(modalOverlay);
       }
@@ -156,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
       overlay.style.objectFit = 'contain';
       overlay.style.pointerEvents = 'none';
       overlay.style.zIndex = '999';
+      overlay.style.imageRendering = 'auto';
       overlay.hidden = true;
 
       overlay.addEventListener('load', syncOverlaySize);
