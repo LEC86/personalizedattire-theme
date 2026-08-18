@@ -31,7 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var mediaWrapper = document.querySelector('.product__media-wrapper');
     var overlay = null;
-    var lastSelectedThumb = null;
+    var currentOverlaySrc = '';
+    var modalOverlay = null;
+    var modalContent = null;
 
     function getActiveMediaImage() {
       if (!mediaWrapper) return null;
@@ -55,20 +57,77 @@ document.addEventListener('DOMContentLoaded', function () {
       overlay.style.top = (targetRect.top - wrapperRect.top) + 'px';
     }
 
-    // Runs the sync after the browser has fully settled layout/paint,
-    // rather than trusting a single synchronous getBoundingClientRect()
-    // call. A single rAF isn't always enough (especially right after a
-    // scroll on Safari/iOS, where layout can still be mid-flight), so
-    // this chains a couple of frames plus a short fallback timeout.
+    function getVisibleModalImage() {
+      var modal = document.querySelector('product-modal[open], product-modal.is-active, product-modal.active');
+      if (!modal) return null;
+
+      var images = modal.querySelectorAll('.product-media-modal__content > img[data-media-id], .product-media-modal__content img[data-media-id]');
+      for (var i = 0; i < images.length; i++) {
+        var rect = images[i].getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.top < window.innerHeight) {
+          return images[i];
+        }
+      }
+      return images.length ? images[0] : null;
+    }
+
+    function syncModalOverlaySize() {
+      if (!currentOverlaySrc) return;
+
+      var target = getVisibleModalImage();
+      if (!target) {
+        if (modalOverlay) modalOverlay.hidden = true;
+        return;
+      }
+
+      modalContent = target.closest('.product-media-modal__content');
+      if (!modalContent) return;
+
+      if (window.getComputedStyle(modalContent).position === 'static') {
+        modalContent.style.position = 'relative';
+      }
+
+      if (!modalOverlay || modalOverlay.parentNode !== modalContent) {
+        if (modalOverlay && modalOverlay.parentNode) modalOverlay.parentNode.removeChild(modalOverlay);
+        modalOverlay = document.createElement('img');
+        modalOverlay.className = 'design-picker-overlay design-picker-overlay--modal';
+        modalOverlay.alt = '';
+        modalOverlay.style.position = 'absolute';
+        modalOverlay.style.margin = '0';
+        modalOverlay.style.maxWidth = 'none';
+        modalOverlay.style.objectFit = 'contain';
+        modalOverlay.style.pointerEvents = 'none';
+        modalOverlay.style.zIndex = '5';
+        modalOverlay.addEventListener('load', syncModalOverlaySize);
+        modalContent.appendChild(modalOverlay);
+      }
+
+      if (modalOverlay.src !== currentOverlaySrc) modalOverlay.src = currentOverlaySrc;
+      modalOverlay.hidden = false;
+
+      var contentRect = modalContent.getBoundingClientRect();
+      var targetRect = target.getBoundingClientRect();
+      modalOverlay.style.width = targetRect.width + 'px';
+      modalOverlay.style.height = targetRect.height + 'px';
+      modalOverlay.style.left = (targetRect.left - contentRect.left + modalContent.scrollLeft) + 'px';
+      modalOverlay.style.top = (targetRect.top - contentRect.top + modalContent.scrollTop) + 'px';
+    }
+
     function syncOverlaySizeSettled() {
       syncOverlaySize();
+      syncModalOverlaySize();
       requestAnimationFrame(function () {
         syncOverlaySize();
+        syncModalOverlaySize();
         requestAnimationFrame(function () {
           syncOverlaySize();
+          syncModalOverlaySize();
         });
       });
-      setTimeout(syncOverlaySize, 150);
+      setTimeout(function () {
+        syncOverlaySize();
+        syncModalOverlaySize();
+      }, 150);
     }
 
     var scrollSyncScheduled = false;
@@ -77,6 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
       scrollSyncScheduled = true;
       requestAnimationFrame(function () {
         syncOverlaySize();
+        syncModalOverlaySize();
         scrollSyncScheduled = false;
       });
     }
@@ -98,45 +158,46 @@ document.addEventListener('DOMContentLoaded', function () {
       overlay.style.zIndex = '999';
       overlay.hidden = true;
 
-      // Re-measure once the overlay image itself has finished loading,
-      // since its own decode/layout can shift things a frame late.
       overlay.addEventListener('load', syncOverlaySize);
-
       mediaWrapper.appendChild(overlay);
 
-      // Page scrolling (not just scrolling inside the gallery) can move
-      // things relative to a sticky media column. Previously only the
-      // gallery's own internal scroll was listened for, so a normal
-      // page scroll never triggered a recheck -- that's the main cause
-      // of the overlay drifting after you scroll and then switch designs.
       window.addEventListener('scroll', scheduleScrollSync, { passive: true });
       window.addEventListener('resize', syncOverlaySizeSettled);
       window.addEventListener('load', syncOverlaySizeSettled);
       mediaWrapper.addEventListener('scroll', scheduleScrollSync, true);
+      document.addEventListener('click', function () {
+        setTimeout(syncOverlaySizeSettled, 50);
+      }, true);
 
       if (window.ResizeObserver) {
         var ro = new ResizeObserver(function () { syncOverlaySizeSettled(); });
         ro.observe(mediaWrapper);
       }
 
-      // Some themes swap the active slide via a class change (slider
-      // transition) slightly after a click/scroll settles. Watch for
-      // that so the overlay re-measures against the actual visible image.
       if (window.MutationObserver) {
         var mo = new MutationObserver(function () { syncOverlaySizeSettled(); });
-        mo.observe(mediaWrapper, { attributes: true, attributeFilter: ['class'], subtree: true });
+        mo.observe(document.body, {
+          attributes: true,
+          attributeFilter: ['class', 'open', 'style'],
+          subtree: true
+        });
       }
     }
 
     function selectDesign(thumb) {
       var overlaySrc = thumb.getAttribute('data-overlay-src');
-      lastSelectedThumb = thumb;
+      currentOverlaySrc = overlaySrc;
 
       if (overlay) {
         overlay.src = overlaySrc;
         overlay.hidden = false;
         syncOverlaySizeSettled();
       }
+
+      if (modalOverlay) {
+        modalOverlay.src = overlaySrc;
+      }
+      syncModalOverlaySize();
 
       picker.querySelectorAll('[data-design-thumb]').forEach(function (t) {
         t.classList.remove('is-selected');
@@ -160,7 +221,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
 
-    // Auto-select the first design so the overlay shows immediately on load.
     if (thumbs.length > 0) {
       selectDesign(thumbs[0]);
     }
